@@ -1,39 +1,67 @@
 "use client";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { AnimeInfoT } from "@/types/anime.types";
+import { AnimeInfoT, animeStoreT } from "@/types/anime.types";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { setCookie } from "cookies-next";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAnimeState } from "@/components/custom-hooks/useAnimeStateHook";
 
 const EpisodesList = ({
   episodes,
   currentEp,
   animeId,
+  setLocalStoreData,
 }: {
   episodes: AnimeInfoT["episodes"];
   currentEp: number;
   animeId: string;
+  setLocalStoreData: (data: animeStoreT) => void;
 }) => {
-  const [selectedRange, setSelectedRange] = useState(0);
-  const selectedEpisods = [];
+  const [selectedRange, setSelectedRange] = useState(
+    Math.round(currentEp / 100) * 100
+  );
+  const [activeEp, setActiveEp] = useState(currentEp);
 
+  const { activeEpState, animeIdState } = useAnimeState();
+
+  const selectedEpisods = [];
   for (let i = (selectedRange - 1) * 100 + 1; i <= selectedRange * 100; i++) {
     selectedEpisods.push(i);
   }
 
+  useEffect(() => {
+    setActiveEp(activeEpState);
+  }, [activeEpState, animeIdState]);
+
+  const animeStoreData =
+    typeof window !== "undefined" && localStorage.getItem(animeId);
+
+  const handleEpisodeButtonClick = (episode: AnimeInfoT["episodes"][0]) => {
+    history.pushState({}, "", `ep-${episode.number}`);
+
+    const oldData = JSON.parse(animeStoreData as string) as animeStoreT;
+
+    setLocalStoreData({
+      ...oldData,
+      title: animeId,
+      currentEp: episode.number,
+    });
+  };
+
   return (
     <div className="grid gap-3">
-      <Select onValueChange={(value) => setSelectedRange(Number(value))}>
+      <Select
+        onValueChange={(value) => setSelectedRange(Number(value))}
+        defaultValue={selectedRange.toString()}>
         <SelectTrigger className="w-fit bg-secondary gap-5 text-sm">
           <SelectValue placeholder="0-100" />
         </SelectTrigger>
@@ -41,7 +69,7 @@ const EpisodesList = ({
           {episodes.map(
             (ep, i) =>
               i % 100 === 0 && (
-                <SelectItem value={i.toString()}>
+                <SelectItem key={i} value={i.toString()}>
                   {i + 1} - {i + 100}
                 </SelectItem>
               )
@@ -50,19 +78,12 @@ const EpisodesList = ({
       </Select>
       <div className="grid md:grid-cols-10 grid-cols-5 gap-1">
         {episodes.slice(selectedRange, selectedRange + 100).map((episode) => (
-          <Link
-            key={episode.number}
-            href={`ep-${episode.number}`}
-            onClick={() => setCookie(animeId, currentEp + 1)}
-            className={cn(
-              buttonVariants({
-                size: "sm",
-                variant: "secondary",
-              }),
-              currentEp == episode.number ? "bg-primary/90" : "bg-secondary/70"
-            )}>
+          <Button
+            onClick={() => handleEpisodeButtonClick(episode)}
+            variant={activeEp === episode.number ? "default" : "secondary"}
+            key={episode.number}>
             {episode.number}
-          </Link>
+          </Button>
         ))}
       </div>
     </div>
@@ -70,3 +91,5 @@ const EpisodesList = ({
 };
 
 export default EpisodesList;
+
+// `ep-${episode.number}`

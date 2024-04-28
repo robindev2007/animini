@@ -40,7 +40,6 @@ const SearchMenu = () => {
       if (searchQuery.length == 0) return;
       setSearchResults(undefined);
       const res = await searchAnime(searchQuery);
-      console.log(res);
       setSearchResults(res);
     };
 

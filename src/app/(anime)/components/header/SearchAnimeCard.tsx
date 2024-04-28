@@ -18,7 +18,7 @@ const SearchAnimeCard = ({
     <div>
       <Link
         onClick={() => onclick()}
-        href={`/watch/${anime.id}`}
+        href={`/watch/${anime.id.split("-dub")[0]}`}
         className={cn(
           active && "bg-secondary",
           "flex gap-2 hover:bg-secondary p-1 rounded border"

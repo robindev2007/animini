@@ -5,57 +5,72 @@ import {
   AnimeInfoT,
   AnimeSearchT,
   TopAiringAnimeT,
+  animeStreamResT,
+  animeStremT,
   animeStremsT,
   serverT,
 } from "@/types/anime.types";
 import axios from "axios";
 import { error } from "console";
-import { Epilogue } from "next/font/google";
+import { cookies } from "next/headers";
 
 export const getTopAiringAnimes = async ({ page }: { page: number }) => {
-  const url = "https://animetize-api.vercel.app/anime/gogoanime/top-airing";
+  const url = "https://ranime-backend.onrender.com/anime/gogoanime/top-airing";
+
+  const maxPage = 6;
 
   try {
-    const { data }: { data: TopAiringAnimeT } = await axios.get(url, {
-      params: { page: 1 },
-    });
+    let currentPage = 1;
+    let hasNextPage = true;
+    let results: TopAiringAnimeT["results"] | [] = [];
 
-    return data;
-  } catch (err: any) {
-    throw new Error(err);
-  }
-};
+    while (hasNextPage) {
+      try {
+        const { data }: { data: TopAiringAnimeT } = await axios.get(url, {
+          params: { page: currentPage },
+        });
 
-export const getAnimeInfo = async ({ id }: { id: string }) => {
-  const url = `https://animetize-api.vercel.app/anime/gogoanime/info/${id}`;
+        const pageResults = data.results;
 
-  try {
-    const { data }: { data: AnimeInfoT } = await axios.get(url);
-    return data;
+        results = [...results, ...pageResults] as TopAiringAnimeT["results"];
+
+        currentPage = currentPage + 1;
+        hasNextPage = currentPage > maxPage ? false : data.hasNextPage;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    return results;
   } catch (err: any) {
     throw new Error(err);
   }
 };
 
 export const getStremLinks = async (
-  id: string,
+  animeEpId: string,
   server?: "gogocdn" | "streamsb" | "vidstreaming"
 ) => {
-  console.log(id);
-  const url = `https://animetize-api.vercel.app/anime/gogoanime/watch/${id}`;
+  const epValuesArry = animeEpId.split("-episode-");
+  const animeEpIdDub = epValuesArry[0] + "-dub-" + epValuesArry[1];
+
+  const url = `https://api-amvstrm.nyt92.eu.org/api/v2/stream/${animeEpId}`;
+  const dubUrl = `https://api-amvstrm.nyt92.eu.org/api/v2/stream/${animeEpIdDub}`;
 
   try {
-    const { data }: { data: animeStremsT } = await axios.get(url, {
-      params: { server: server ? server : "gogocdn" },
-    });
-    return data;
+    const { data: sub }: { data: animeStremT } = await axios.get(url);
+    const dubData = await axios.get(dubUrl);
+
+    const results = { sub, dub: dubData.data as animeStremT };
+    console.log(results);
+    return sub;
   } catch (err: any) {
-    console.log(error);
+    console.error(error);
   }
 };
 
 export const searchAnime = async (query: string) => {
-  const url = `https://animetize-api.vercel.app/anime/gogoanime/${query}`;
+  const url = `https://ranime-backend.onrender.com/anime/gogoanime/${query}`;
 
   try {
     const { data }: { data: AnimeSearchT } = await axios.get(url, {
@@ -67,53 +82,69 @@ export const searchAnime = async (query: string) => {
   }
 };
 
-export const getAvailableServers = async (
-  animeId: string,
-  subOrdub: AnimeInfoT["subOrDub"],
-  epId: string
-) => {
+// new world
+export const getAnimeInfo = async ({ animeId }: { animeId: string }) => {
+  const url = `https://ranime-backend.onrender.com/anime/gogoanime/info/${animeId}`;
+
   try {
-    const defaultLangServers = await getServer(epId);
-
-    const s1 = {
-      subOrdub: subOrdub,
-      servers: defaultLangServers?.filter((server) =>
-        serversNames.includes(server.name)
-      ),
-    };
-    let s2;
-
-    const otherLangLink =
-      subOrdub === "sub"
-        ? `${animeId}-dub-episode-${epId.split("-episode-")[1]}`
-        : `${animeId.split("-dub")[0]}-episode-${epId.split("-episode-")[1]}`;
-
-    try {
-      const servers2 = await getServer(otherLangLink);
-
-      s2 = servers2 && {
-        subOrdub: subOrdub === "sub" ? "dub" : "sub",
-        servers: servers2?.filter((server) =>
-          serversNames.includes(server.name)
-        ),
-      };
-    } catch (error) {
-      s2 = null;
-    }
-
-    return [s1, s2];
+    const { data }: { data: AnimeInfoT } = await axios.get(url);
+    return data;
   } catch (err: any) {
-    console.log(error);
+    return null;
   }
 };
 
-const getServer = async (epId: string) => {
-  const url = `https://animetize-api.vercel.app/anime/gogoanime/servers/${epId}`;
+export const getEpisodeInfo = async ({
+  epId,
+  animeId,
+  ep,
+}: {
+  epId: string;
+  animeId: string;
+  ep: string;
+}) => {
+  const info = (await getAnimeInfo({ animeId: animeId })) as AnimeInfoT;
+  const streams = await getStrems({ animeId, ep });
 
-  try {
-    const { data }: { data: serverT[] } = await axios.get(url);
-    return data;
-  } catch {
-    return null;
-  }
+  const responce = {
+    info,
+    streams,
+  };
+  return responce;
+};
+
+export const getStrems = async ({
+  animeId,
+  ep,
+}: {
+  animeId: string;
+  ep: string;
+}) => {
+  const subEpId = `${animeId}-episode-${ep}`;
+  const dubEpId = `${animeId}-dub-episode-${ep}`;
+
+  const getSingleStrem = async ({ epId }: { epId: string }) => {
+    try {
+      const { data }: { data: animeStreamResT } = await axios.get(
+        `https://api-amvstrm.nyt92.eu.org/api/v2/stream/${epId}`
+      );
+
+      console.log();
+      if (!data) return null;
+
+      const res = Object.entries(data.stream.multi).map(([key, value]) => ({
+        title: key,
+        strems: value,
+      }));
+
+      return res;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const subStrems = await getSingleStrem({ epId: subEpId });
+  const dubStrems = await getSingleStrem({ epId: dubEpId });
+
+  return { sub: subStrems, dub: dubStrems } as unknown as animeStremsT;
 };

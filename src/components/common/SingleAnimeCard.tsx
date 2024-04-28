@@ -11,9 +11,9 @@ const SingleAnimeCard = ({
 }) => {
   return (
     <Link
-      href={`/watch/${anime.id}`}
-      className="bg-card p-2 rounded gap-2 border overflow-hidden h-full flex flex-col shadow">
-      <div className="h-[300px] shrink-0 overflow-hidden rounded-[inherit] border">
+      href={`/watch/${anime.id.split("-dub")[0]}`}
+      className="bg-card hover:scale-105 transition-all duration-200 ease-out odd:hover:rotate-1 even:hover:-rotate-1 rounded gap-2 border overflow-hidden h-full hover:shadow-2xl hover:z-20 p-2 flex flex-col shadow hover:border-primary/60">
+      <div className="h-48 md:h-56 border border-border/80 pxshrink-0 overflow-hidden rounded-[inherit]">
         <Image
           src={anime.image}
           height={600}
@@ -23,7 +23,7 @@ const SingleAnimeCard = ({
         />
       </div>
       <div className="mt-auto">
-        <h2 className="line-clamp-2 text-sm">{anime.title}</h2>
+        <h2 className="line-clamp-2 text-sm font-semibold">{anime.title}</h2>
       </div>
       <div className="flex flex-wrap">
         {anime.genres.slice(0, 3).map((genre) => (

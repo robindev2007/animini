@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { serversNames } from "@/lib/constance/constances";
 import { AnimeInfoT, availableServers, serverT } from "@/types/anime.types";
@@ -18,6 +19,7 @@ const ServerSelect = ({
     <div className="space-y-2">
       {servers.map(
         (server) =>
+          server &&
           server.servers && (
             <div key={server.subOrdub} className="flex gap-4 items-center">
               <p>{server.subOrdub}:</p>

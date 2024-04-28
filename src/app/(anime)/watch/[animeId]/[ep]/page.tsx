@@ -1,44 +1,41 @@
 import React from "react";
 import {
   getAnimeInfo,
-  getAvailableServers,
+  getEpisodeInfo,
   getStremLinks,
+  getStrems,
 } from "@/app/actions/anime";
-import WatchPage from "./components/Watch";
-import { serversNames } from "@/lib/constance/constances";
-import { animeStremsT } from "@/types/anime.types";
-import VideoPlayer from "./components/VideoPlayer";
+import Watch from "./components/Watch";
+import Image from "next/image";
+import { AnimeInfoT, animeStremsT } from "@/types/anime.types";
+import { cookies } from "next/headers";
 
 const AnimeEpPage = async ({
   params,
 }: {
   params: { ep: string; animeId: string };
 }) => {
-  const animeInfo = await getAnimeInfo({ id: params.animeId });
-
   const epId =
     params.ep === "ep-0"
       ? params.animeId
       : params.animeId + "-episode" + params.ep.split("ep")[1];
 
-  const videourls = (await getStremLinks(epId)) as animeStremsT;
+  const allData = await getEpisodeInfo({
+    animeId: params.animeId,
+    ep: params.ep.split("ep-")[1],
+    epId: epId,
+  });
 
-  const availableServers = await getAvailableServers(
-    animeInfo.id,
-    animeInfo.subOrDub,
-    epId
-  );
+  const animeInfo = allData.info;
+  const strems = allData.streams;
 
   return (
-    <div className="flex flex-col">
-      {/* <WatchPage
-        animeInfo={animeInfo}
+    <div className="grid gap-3">
+      <Watch
+        animeInfo={allData.info}
+        defaultVideourls={strems}
         currentEp={Number(params.ep.split("ep-")[1])}
-        videoUrls={videourls}
-        servers={availableServers}
       />
-      {JSON.stringify(availableServers)} */}
-      <VideoPlayer url={videourls?.sources[0].url} />
     </div>
   );
 };

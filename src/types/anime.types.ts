@@ -19,34 +19,17 @@ export type AnimeInfoT = {
   image: string;
   releaseDate: string | null; // or null
   description: string | null; // or null
-  genres: [string];
-  subOrDub: string;
+  genres: string[];
+  subOrDub: "sub" | "dub";
   type: string | null; // or null
   status: string;
   otherName: string | null; // or null
   totalEpisodes: number;
-  episodes: [
-    {
-      id: string;
-      number: number;
-      url: string;
-    }
-  ];
-};
-
-export type animeStremsT = {
-  headers: {
-    Referer: string;
-    watchsb: string | null; // or null, since only provided with server being equal to streamsb.
-    "User-Agent": string | null; // or null
-  };
-  sources: [
-    {
-      url: string;
-      quality: string;
-      isM3U8: true;
-    }
-  ];
+  episodes: {
+    id: string;
+    number: number;
+    url: string;
+  }[];
 };
 
 export type AnimeSearchT = {
@@ -64,11 +47,62 @@ export type AnimeSearchT = {
 };
 
 export type serverT = {
-  name: string;
-  url: string;
+  key: string;
+  value: {
+    url: string;
+    label: string;
+    isM3U8: boolean;
+    quality: string;
+  };
 };
 
-export type availableServers = {
-  subOrdub: string;
-  servers: serverT[] | null;
+export type animeStremsT = {
+  sub: animeStremT;
+  dub?: animeStremT;
+};
+
+export type animeStremT = {
+  title: string;
+  strems: {
+    url: string;
+    label: string;
+    isM3U8: boolean;
+    quality: string;
+  };
 }[];
+
+export type animeStreamResT = {
+  code: number;
+  message: string;
+  info: {
+    title: string;
+    id: string;
+    episode: string;
+  };
+  stream: {
+    multi: {
+      main: {
+        url: string;
+        label: string;
+        isM3U8: boolean;
+        quality: string;
+      };
+      backup: {
+        url: string;
+        label: string;
+        isM3U8: boolean;
+        quality: string;
+      };
+    };
+    tracks: string;
+  };
+};
+
+export type videoStateT = { subOrDub: "sub" | "dub"; url: string };
+
+export type animeStoreT = {
+  title?: string;
+  currentEp?: string | number;
+  prefiredLanguge?: "sub" | "dub";
+  watchdEpisods?: number[];
+};
