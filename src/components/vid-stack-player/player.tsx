@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   TbPlayerTrackNextFilled,
   TbPlayerTrackPrevFilled,
@@ -9,7 +9,6 @@ import { CheckboxLable } from "../ui/CheckboxLable";
 
 import { MediaPlayer, MediaProvider, SeekButton } from "@vidstack/react";
 import {
-  DefaultLayoutIcons,
   defaultLayoutIcons,
   DefaultVideoLayout,
 } from "@vidstack/react/player/layouts/default";
@@ -17,15 +16,62 @@ import {
 import "@vidstack/react/player/styles/default/theme.css";
 import "@vidstack/react/player/styles/default/layouts/video.css";
 
-import { FaPause, FaPlay } from "react-icons/fa";
-import { IoVolumeMute } from "react-icons/io5";
-import { FaVolumeLow } from "react-icons/fa6";
 import { SeekForward10Icon } from "@vidstack/react/icons";
+import { getCookie, getCookies, setCookie } from "cookies-next";
+import { useFirstRender } from "../custom-hooks/useFirstRender";
 
-const Player = ({ videoUrl }: { videoUrl: string }) => {
+const Player = ({
+  videoUrl,
+  nextEpisode,
+  prevepisode,
+}: {
+  videoUrl: string;
+  nextEpisode: () => void;
+  prevepisode: () => void;
+}) => {
+  const [autoPlay, setAutoPlay] = useState(false);
+  const [autoNext, setAutoNext] = useState(false);
+
+  const isFirstRender = useFirstRender();
+
+  useEffect(() => {
+    const listanStorageChange = () => {
+      if (localStorage.getItem("auto-play") === null) {
+        setAutoPlay(false);
+      } else {
+        setAutoPlay(JSON.parse(localStorage.getItem("auto-play") as string));
+      }
+
+      if (localStorage.getItem("auto-next") === null) {
+        setAutoNext(false);
+      } else {
+        setAutoNext(JSON.parse(localStorage.getItem("auto-next") as string));
+      }
+    };
+    isFirstRender && listanStorageChange();
+
+    window.addEventListener("storage", listanStorageChange);
+
+    return () => window.removeEventListener("storage", listanStorageChange);
+  }, [autoPlay, autoNext]);
+
+  const setAutoPlayStorage = (value: boolean) => {
+    localStorage.setItem("auto-play", JSON.stringify(value));
+    window.dispatchEvent(new Event("storage"));
+    console.log("setItemSuccess");
+  };
+  const setAutoNextStorage = (value: boolean) => {
+    localStorage.setItem("auto-next", JSON.stringify(value));
+    window.dispatchEvent(new Event("storage"));
+  };
+
   return (
     <div>
-      <MediaPlayer storage={"no-key"} src={videoUrl}>
+      <MediaPlayer
+        onEnded={() => autoNext && nextEpisode()}
+        autoPlay={autoPlay}
+        storage={"player-state"}
+        src={videoUrl}>
         <MediaProvider />
         <DefaultVideoLayout
           slots={{
@@ -42,16 +88,22 @@ const Player = ({ videoUrl }: { videoUrl: string }) => {
       <div className="w-full flex items-center gap-2">
         <CheckboxLable
           lable="Auto Play"
-          onCheckedChange={(checked) => console.log(checked)}
+          value={autoPlay}
+          onCheckedChange={(checked) => setAutoPlayStorage(checked)}
         />
         <CheckboxLable
           lable="Auto Next"
-          onCheckedChange={(checked) => console.log(checked)}
+          value={autoNext}
+          onCheckedChange={(checked) => setAutoNextStorage(checked)}
         />
-        <button className="color-red-300 hover:color-primary">
+        <button
+          className="group text-muted-foreground hover:text-foreground transition-colors ease-out"
+          onClick={nextEpisode}>
           <TbPlayerTrackPrevFilled color="inherit" />
         </button>
-        <button className="color-red-300 hover:color-primary">
+        <button
+          className="group text-muted-foreground hover:text-foreground transition-colors ease-out"
+          onClick={prevepisode}>
           <TbPlayerTrackNextFilled color="inherit" />
         </button>
       </div>

@@ -5,7 +5,7 @@ const EpNumberDetails = ({ activeEp }: { activeEp: number }) => {
     <div className="bg-secondary rounded p-2 w-full text-xs text-center border text-muted-foreground">
       You are currently watching{" "}
       <span className="text-primary font-semibold">Episode {activeEp}</span>. If
-      current server dosen't work, please try other servers.
+      current server dosen&apos;t work, please try other servers.
     </div>
   );
 };

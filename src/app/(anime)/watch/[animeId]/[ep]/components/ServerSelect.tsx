@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { serversNames } from "@/lib/constance/constances";
-import { AnimeInfoT, availableServers, serverT } from "@/types/anime.types";
+import { AnimeInfoT, serverT } from "@/types/anime.types";
 import { convertServerNames } from "@/utils/convertServersName";
 import { json } from "node:stream/consumers";
 import React from "react";
@@ -11,20 +11,20 @@ const ServerSelect = ({
   animeInfo,
   currentServer,
 }: {
-  servers: availableServers;
+  servers: any;
   animeInfo: AnimeInfoT;
   currentServer?: string;
 }) => {
   return (
     <div className="space-y-2">
       {servers.map(
-        (server) =>
+        (server: any) =>
           server &&
           server.servers && (
             <div key={server.subOrdub} className="flex gap-4 items-center">
               <p>{server.subOrdub}:</p>
               <div className="flex items-center gap-2">
-                {server.servers.map((ser) => (
+                {server.servers.map((ser: any) => (
                   <Button
                     variant={
                       (currentServer === ser.name ||

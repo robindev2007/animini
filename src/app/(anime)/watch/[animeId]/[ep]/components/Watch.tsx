@@ -15,6 +15,8 @@ import Player from "@/components/vid-stack-player/player";
 import EpNumberDetails from "./EpNumberDetails";
 import ServerOptions from "./ServerOptions";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/router";
+import Image from "next/image";
 
 const Watch = ({
   animeInfo,
@@ -40,6 +42,7 @@ const Watch = ({
   const [loadingVideo, setLoadingVideo] = useState(false);
 
   const { animeEpId, activeEpState, animeIdState } = useAnimeState();
+
   const isFirstRender = useFirstRender();
 
   const handleSetVideoState = (value: videoStateT) => {
@@ -76,13 +79,32 @@ const Watch = ({
     localStorage.setItem(animeInfo.id, JSON.stringify(d));
   };
 
+  const nextEpisode = () => {
+    history.pushState({}, "", `ep-${Number(activeEpState) + 1}`);
+  };
+  const prevEpisode = () => {
+    history.pushState({}, "", `ep-${Number(activeEpState) + 1}`);
+  };
+
   return (
     <div className="w-full grid gap-5 mb-20">
-      {JSON.stringify(animeStoreData)}
       {loadingVideo || !videoState.url ? (
-        <div className="aspect-video bg-secondary">Loading videos</div>
+        <div className="aspect-video rounded-md bg-secondary flex items-center justify-center flex-col">
+          <Image
+            className="h-[20%] w-auto"
+            src={"/images/pokimon-loading.gif"}
+            height={600}
+            width={600}
+            alt="loading..."
+          />
+          <div className="text-muted-foreground/60">Loading...</div>
+        </div>
       ) : (
-        <Player videoUrl={videoState.url} />
+        <Player
+          videoUrl={videoState.url}
+          nextEpisode={nextEpisode}
+          prevepisode={prevEpisode}
+        />
       )}
       <EpNumberDetails activeEp={activeEpState} />
 
@@ -92,34 +114,6 @@ const Watch = ({
         videoState={videoState}
         setLocalStoreData={setLocalStoreData}
       />
-
-      {/* <div className="flex gap-3 flex-col">
-        {Object.keys(videoUrls).map((subOrDub) => (
-          <div className="flex gap-3">
-            <span>{subOrDub}</span>
-            <div className="flex gap-2">
-              {Object.keys(videoUrls[subOrDub]).map((a) => (
-                <Button
-                  variant={
-                    videoState.subOrDub === subOrDub &&
-                    videoState.url === videoUrls[subOrDub][a]
-                      ? "default"
-                      : "secondary"
-                  }
-                  size={"sm"}
-                  onClick={() =>
-                    setVideoState({
-                      subOrDub: subOrDub,
-                      url: videoUrls[subOrDub][a].strems.url,
-                    })
-                  }>
-                  Server {a}
-                </Button>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div> */}
 
       <EpisodesList
         animeId={animeInfo.id}
