@@ -30,28 +30,36 @@ const Watch = ({
   const animeStoreRowData =
     typeof window !== "undefined" ? localStorage.getItem(animeInfo.id) : null;
 
-  const animeStoreData = JSON.parse(animeStoreRowData as string) as AnimeInfoT;
+  const animeStoreData = JSON.parse(animeStoreRowData as string) as animeStoreT;
 
   const [videoUrls, setVieoUrls] = useState(defaultVideourls);
-  const [videoState, setVideoState] = useState<videoStateT>({
-    subOrDub: animeStoreData?.subOrDub ? animeStoreData?.subOrDub : "dub",
-    url: defaultVideourls.sub[0].strems.url,
-  });
+  const [videoUrl, setVideoUrl] = useState(
+    animeStoreData?.prefiredLanguge
+      ? animeStoreData.prefiredLanguge === "dub" && defaultVideourls.dub?.length
+        ? defaultVideourls.dub[0].strems.url
+        : defaultVideourls.sub[0].strems.url
+      : defaultVideourls.dub?.length
+      ? defaultVideourls.dub[0].strems.url
+      : defaultVideourls.sub && defaultVideourls.sub.length
+      ? defaultVideourls.sub[0].strems.url
+      : ""
+  );
 
-  const [subOrDub, setSubOrDub] = useState(animeInfo.subOrDub);
   const [loadingVideo, setLoadingVideo] = useState(false);
 
   const { animeEpId, activeEpState, animeIdState } = useAnimeState();
 
   const isFirstRender = useFirstRender();
 
-  const handleSetVideoState = (value: videoStateT) => {
+  const handleSetVideoUrl = (value: string) => {
     setLoadingVideo(true);
-    setVideoState(value);
+    setVideoUrl(value);
     setLoadingVideo(false);
+    console.log(value);
   };
 
   useEffect(() => {
+    console.log(defaultVideourls);
     const getVideoUrl = async () => {
       if (isFirstRender) return;
       setLoadingVideo(true);
@@ -60,16 +68,10 @@ const Watch = ({
         ep: activeEpState.toString(),
       });
 
+      console.log(res);
+
       setVieoUrls(res);
-      setVideoState({
-        subOrDub: videoState.subOrDub,
-        url:
-          videoState.subOrDub === "dub"
-            ? res.dub?.length
-              ? res.dub[0].strems.url
-              : res.sub[0].strems.url
-            : res.sub[0].strems.url,
-      });
+      // setVideoUrl(videoUrls);
       setLoadingVideo(false);
     };
     getVideoUrl();
@@ -88,7 +90,7 @@ const Watch = ({
 
   return (
     <div className="w-full grid gap-5 mb-20">
-      {loadingVideo || !videoState.url ? (
+      {loadingVideo || !videoUrl ? (
         <div className="aspect-video rounded-md bg-secondary flex items-center justify-center flex-col">
           <Image
             className="h-[20%] w-auto"
@@ -101,7 +103,7 @@ const Watch = ({
         </div>
       ) : (
         <Player
-          videoUrl={videoState.url}
+          videoUrl={videoUrl}
           nextEpisode={nextEpisode}
           prevepisode={prevEpisode}
         />
@@ -110,9 +112,9 @@ const Watch = ({
 
       <ServerOptions
         servers={videoUrls}
-        setVideoState={handleSetVideoState}
-        videoState={videoState}
+        setVideoUrl={handleSetVideoUrl}
         setLocalStoreData={setLocalStoreData}
+        videoUrl={videoUrl}
       />
 
       <EpisodesList

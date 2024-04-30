@@ -17,7 +17,7 @@ export const Header = () => {
   return (
     <div className="py-2 flex items-center justify-between gap-2">
       <Link href={"/"}>
-        <h2 className="text-lime-600 text-lg font-bold">AniRobin</h2>
+        <h2 className="text-lime-600 text-lg font-bold">ZAnime</h2>
       </Link>
       <SearchMenu />
     </div>

@@ -10,19 +10,19 @@ import React from "react";
 
 const ServerOptions = ({
   servers,
-  setVideoState,
-  videoState,
+  setVideoUrl,
   setLocalStoreData,
+  videoUrl,
 }: {
   servers: animeStremsT;
-  setVideoState: (value: videoStateT) => void;
-  videoState: videoStateT;
+  setVideoUrl: (value: string) => void;
   setLocalStoreData: (data: animeStoreT) => void;
+  videoUrl: string;
 }) => {
   return (
     <div>
       <div className="flex flex-col gap-3">
-        {servers.sub.length && (
+        {servers.sub && servers.sub.length && (
           <div className="gap-3 flex items-center">
             <span>Sub</span>
             <div className="flex gap-2 items-center">
@@ -30,16 +30,13 @@ const ServerOptions = ({
                 <Button
                   key={server.title}
                   onClick={() => {
-                    setVideoState({ subOrDub: "sub", url: server.strems.url });
+                    setVideoUrl(server.strems.url);
                     setLocalStoreData({
                       prefiredLanguge: "sub",
                     });
                   }}
                   variant={
-                    videoState.subOrDub === videoState.subOrDub &&
-                    videoState.url === server.strems.url
-                      ? "default"
-                      : "secondary"
+                    videoUrl === server.strems.url ? "default" : "secondary"
                   }
                   size={"sm"}>
                   {server.strems.quality}
@@ -56,16 +53,13 @@ const ServerOptions = ({
                 <Button
                   key={server.title}
                   onClick={() => {
-                    setVideoState({ subOrDub: "dub", url: server.strems.url });
+                    setVideoUrl(server.strems.url);
                     setLocalStoreData({
                       prefiredLanguge: "sub",
                     });
                   }}
                   variant={
-                    videoState.subOrDub === videoState.subOrDub &&
-                    videoState.url === server.strems.url
-                      ? "default"
-                      : "secondary"
+                    videoUrl === server.strems.url ? "default" : "secondary"
                   }
                   size={"sm"}>
                   {server.strems.quality}

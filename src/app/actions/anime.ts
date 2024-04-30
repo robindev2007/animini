@@ -106,6 +106,8 @@ export const getEpisodeInfo = async ({
   const info = (await getAnimeInfo({ animeId: animeId })) as AnimeInfoT;
   const streams = await getStrems({ animeId, ep });
 
+  console.log(epId);
+
   const responce = {
     info,
     streams,
@@ -123,13 +125,14 @@ export const getStrems = async ({
   const subEpId = `${animeId}-episode-${ep}`;
   const dubEpId = `${animeId}-dub-episode-${ep}`;
 
+  console.log("get new request");
+
   const getSingleStrem = async ({ epId }: { epId: string }) => {
     try {
       const { data }: { data: animeStreamResT } = await axios.get(
         `https://api-amvstrm.nyt92.eu.org/api/v2/stream/${epId}`
       );
 
-      console.log();
       if (!data) return null;
 
       const res = Object.entries(data.stream.multi).map(([key, value]) => ({
