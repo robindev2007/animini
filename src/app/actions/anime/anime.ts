@@ -100,23 +100,31 @@ export const getStrems = async ({
 export const getTrandingAnimes = async (limit?: number) => {
   const url = "https://api.amvstr.me/api/v2/trending";
 
-  const { data } = await axios.get(url, {
-    params: {
-      limit: limit ? limit : 10,
-    },
-  });
+  try {
+    const { data } = await axios.get(url, {
+      params: {
+        limit: limit ? limit : 10,
+      },
+    });
 
-  return data.results as animeInfoT[];
+    return data.results as animeInfoT[];
+  } catch (error) {
+    return null;
+  }
 };
 
 export const getSearchResult = async (search: string) => {
   const url = "https://api.amvstr.me/api/v2/search";
 
-  const { data } = await axios.get(url, {
-    params: {
-      q: search,
-    },
-  });
+  try {
+    const { data } = await axios.get(url, {
+      params: {
+        q: search,
+      },
+    });
 
-  return data.results as searchResultT[];
+    return data.results as searchResultT[];
+  } catch (error) {
+    return null;
+  }
 };
