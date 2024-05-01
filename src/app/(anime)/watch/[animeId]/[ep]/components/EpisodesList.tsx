@@ -1,7 +1,6 @@
 "use client";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { AnimeInfoT, animeStoreT } from "@/types/anime.types";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { setCookie } from "cookies-next";
@@ -14,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAnimeState } from "@/components/custom-hooks/useAnimeStateHook";
+import { animeStoreDataT, episodeT } from "@/types/anime/anime.types";
 
 const EpisodesList = ({
   episodes,
@@ -21,17 +21,16 @@ const EpisodesList = ({
   animeId,
   setLocalStoreData,
 }: {
-  episodes: AnimeInfoT["episodes"];
+  episodes: episodeT[];
   currentEp: number;
-  animeId: string;
-  setLocalStoreData: (data: animeStoreT) => void;
+  animeId: number;
+  setLocalStoreData: (data: animeStoreDataT) => void;
 }) => {
   const [selectedRange, setSelectedRange] = useState(
     Math.round(currentEp / 100) * 100
   );
   const [activeEp, setActiveEp] = useState(currentEp);
-
-  const { activeEpState, animeIdState } = useAnimeState();
+  const { animeIdState, epState, animeStoreData } = useAnimeState();
 
   const selectedEpisods = [];
   for (let i = (selectedRange - 1) * 100 + 1; i <= selectedRange * 100; i++) {
@@ -39,21 +38,22 @@ const EpisodesList = ({
   }
 
   useEffect(() => {
-    setActiveEp(activeEpState);
-  }, [activeEpState, animeIdState]);
+    setActiveEp(epState);
+  }, [epState]);
 
-  const animeStoreData =
-    typeof window !== "undefined" && localStorage.getItem(animeId);
+  const handleEpisodeButtonClick = (episode: number) => {
+    history.pushState({}, "", `${episode}`);
 
-  const handleEpisodeButtonClick = (episode: AnimeInfoT["episodes"][0]) => {
-    history.pushState({}, "", `ep-${episode.number}`);
+    const isNewEp =
+      !animeStoreData?.watchedEpisodes ||
+      !animeStoreData.watchedEpisodes.includes(episode);
 
-    const oldData = JSON.parse(animeStoreData as string) as animeStoreT;
-
+    if (!isNewEp) return;
     setLocalStoreData({
-      ...oldData,
-      title: animeId,
-      currentEp: episode.number,
+      currentEp: episode,
+      watchedEpisodes: animeStoreData?.watchedEpisodes?.length
+        ? [...animeStoreData.watchedEpisodes, episode]
+        : [episode],
     });
   };
 
@@ -77,14 +77,32 @@ const EpisodesList = ({
         </SelectContent>
       </Select>
       <div className="grid md:grid-cols-10 grid-cols-5 gap-1">
-        {episodes.slice(selectedRange, selectedRange + 100).map((episode) => (
-          <Button
-            onClick={() => handleEpisodeButtonClick(episode)}
-            variant={activeEp === episode.number ? "default" : "secondary"}
-            key={episode.number}>
-            {episode.number}
-          </Button>
-        ))}
+        {episodes
+          .slice(selectedRange, selectedRange + 100)
+          .map((episode, i) => {
+            const epNumber = Number(
+              episode.id.split("-")[episode.id.split("-").length - 1]
+            );
+            return (
+              <Button
+                key={episode.id}
+                onClick={() => handleEpisodeButtonClick(epNumber)}
+                variant={
+                  epState == epNumber ||
+                  animeStoreData?.watchedEpisodes?.includes(epNumber)
+                    ? "default"
+                    : "secondary"
+                }
+                size={"sm"}
+                className={cn(
+                  epState !== epNumber &&
+                    animeStoreData?.watchedEpisodes?.includes(epNumber) &&
+                    "opacity-20"
+                )}>
+                {epNumber}
+              </Button>
+            );
+          })}
       </div>
     </div>
   );

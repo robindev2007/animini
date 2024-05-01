@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "gogocdn.net",
       },
+      {
+        protocol: "https",
+        hostname: "s4.anilist.co",
+      },
     ],
   },
 };

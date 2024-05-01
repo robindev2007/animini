@@ -1,22 +1,36 @@
 "use client";
-import { animeStoreT } from "@/types/anime.types";
+import WatchPageSkaliton from "@/components/Loading/WatchPageSkaliton";
+import { useAnimeState } from "@/components/custom-hooks/useAnimeStateHook";
+import { TODO, animeStoreDataT } from "@/types/anime/anime.types";
 import { useRouter } from "next/navigation";
 
 const AnimePage = ({ params }: { params: { animeId: string } }) => {
   const router = useRouter();
   let currentEp = 1;
-  const animeStoreRowData =
-    typeof window !== "undefined" ? localStorage.getItem(params.animeId) : null;
 
-  if (animeStoreRowData === null)
-    return router.push(`/watch/${params.animeId}/ep-1`);
+  const animeStoreData =
+    typeof window !== "undefined"
+      ? (JSON.parse(
+          localStorage.getItem(params.animeId) as string
+        ) as animeStoreDataT)
+      : null;
 
-  const animeStoreData = JSON.parse(animeStoreRowData) as animeStoreT;
+  if (animeStoreData?.currentEp) {
+    router.push(`/watch/${params.animeId}/${animeStoreData.currentEp}`);
+  } else {
+    if (typeof window !== "undefined") {
+      const oldData = JSON.parse(
+        localStorage.getItem(params.animeId) as string
+      );
+      localStorage.setItem(
+        params.animeId,
+        JSON.stringify({ ...oldData, currentEp: 1 } as animeStoreDataT)
+      );
+    }
+    router.push(`/watch/${params.animeId}/${1}`);
+  }
 
-  if (!animeStoreData.currentEp)
-    return router.push(`/watch/${params.animeId}/ep-1`);
-
-  return router.push(`/watch/${params.animeId}/ep-${animeStoreData.currentEp}`);
+  return <WatchPageSkaliton />;
 };
 
 export default AnimePage;

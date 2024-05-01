@@ -1,25 +1,26 @@
 "use client";
-import { searchAnime } from "@/app/actions/anime";
-import { Input } from "@/components/ui/input";
-import { AnimeSearchT } from "@/types/anime.types";
-import React, {
-  KeyboardEvent,
-  KeyboardEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { useDebounce } from "use-debounce";
+import React, { useState } from "react";
 import SearchMenu from "./SearchMenu";
 import Link from "next/link";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { Button } from "@/components/ui/button";
 
 export const Header = () => {
+  const [resultsActive, setResultsActive] = useState(false);
+
   return (
-    <div className="py-2 flex items-center justify-between gap-2">
+    <div className="py-2 flex items-center justify-between gap-2 relative">
       <Link href={"/"}>
-        <h2 className="text-lime-600 text-lg font-bold">ZAnime</h2>
+        <h2 className="text-purple-500 text-lg font-bold">ZAnime</h2>
       </Link>
-      <SearchMenu />
+      <Button
+        size={"icon"}
+        variant={"secondary"}
+        onClick={() => setResultsActive((prev) => !prev)}>
+        <FaMagnifyingGlass />
+      </Button>
+
+      {resultsActive && <SearchMenu />}
     </div>
   );
 };

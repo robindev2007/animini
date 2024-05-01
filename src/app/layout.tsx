@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        <main className="min-h-screen overflow-x-hidden">{children}</main>
+        <main className="min-h-screen">{children}</main>
       </body>
     </html>
   );

@@ -1,17 +1,16 @@
-import { searchAnime } from "@/app/actions/anime";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { AnimeSearchT } from "@/types/anime.types";
 import React, { KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useDebounce } from "use-debounce";
 import SearchAnimeCard from "./SearchAnimeCard";
+import { getSearchResult } from "@/app/actions/anime/anime";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { Button } from "@/components/ui/button";
 
 const SearchMenu = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [serarchText] = useDebounce(searchQuery, 200);
-  const [resultsActive, setResultsActive] = useState(false);
 
-  const [searchResults, setSearchResults] = useState<AnimeSearchT | undefined>(
+  const [searchResults, setSearchResults] = useState<any | undefined>(
     undefined
   );
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -39,7 +38,7 @@ const SearchMenu = () => {
     const getSearchResults = async () => {
       if (searchQuery.length == 0) return;
       setSearchResults(undefined);
-      const res = await searchAnime(searchQuery);
+      const res = await getSearchResult(searchQuery);
       setSearchResults(res);
     };
 
@@ -47,11 +46,11 @@ const SearchMenu = () => {
     return () => {};
   }, [serarchText]);
 
-  // useEffect(() => {
-  //   activeIndexRef.current?.scrollIntoView({
-  //     behavior: "smooth",
-  //   });
-  // }, [activeIndex]);
+  useEffect(() => {
+    activeIndexRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [activeIndex]);
 
   useEffect(() => {
     window.addEventListener("click", (e) => {
@@ -59,7 +58,7 @@ const SearchMenu = () => {
         componentRef.current &&
         !componentRef.current.contains(e.target as any)
       ) {
-        setResultsActive(false);
+        // setResultsActive(false);
       }
     });
 
@@ -69,36 +68,29 @@ const SearchMenu = () => {
   return (
     <div
       ref={componentRef}
-      className="w-[40%] relative z-20"
+      className="z-20"
       tabIndex={1}
       onKeyDown={handleKeyDown}>
-      <Input
-        onClick={() => setResultsActive(true)}
-        // onBlur={() => setResultsActive(false)}
-        className="peer/input z-50 flex"
-        onChange={(e) => setSearchQuery(e.target.value)}
-        type="text"
-        placeholder="Search..."
-      />
+      <div className="absolute top-full left-0 w-full bg-card p-3">
+        <Input
+          className="peer/input z-50 flex"
+          onChange={(e) => setSearchQuery(e.target.value)}
+          type="text"
+          placeholder="Search..."
+        />
 
-      {resultsActive &&
-        searchResults &&
-        searchResults?.results.length > 0 &&
-        searchQuery.length > 0 && (
-          <div className="absolute top-full w-full left-0 bg-card shadow p-2 rounded border mt-1 gap-1 flex-col">
-            {searchResults?.results.slice(0, 6).map((anime, index) => (
+        {searchResults?.length > 0 && searchQuery.length > 0 && (
+          <div className="absolute top-full w-full flex left-0 bg-card shadow p-2 rounded border mt-1 gap-1 flex-col">
+            {searchResults.slice(0, 6).map((anime: any, index: any) => (
               <div
                 ref={activeIndex === index ? activeIndexRef : null}
                 key={index}>
-                <SearchAnimeCard
-                  onclick={() => setResultsActive(false)}
-                  active={activeIndex === index}
-                  anime={anime}
-                />
+                <SearchAnimeCard active={activeIndex === index} anime={anime} />
               </div>
             ))}
           </div>
         )}
+      </div>
     </div>
   );
 };

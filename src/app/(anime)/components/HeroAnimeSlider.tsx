@@ -1,5 +1,4 @@
 "use client";
-import { topAnimes } from "@/app/actions/data/top-animes";
 import React from "react";
 import SingleHeroSlider from "./SingleHeroSlider";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,8 +8,13 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 // import "swiper/css/pagination";
 import "@/styles/pagination.css";
+import { animeInfoT, trendingAnimeT } from "@/types/anime/anime.types";
 
-const HeroAnimeSlider = () => {
+const HeroAnimeSlider = ({
+  trandingAnimes,
+}: {
+  trandingAnimes: animeInfoT[];
+}) => {
   return (
     <div>
       <Swiper
@@ -22,7 +26,7 @@ const HeroAnimeSlider = () => {
           delay: 2000,
         }}
         modules={[Pagination]}>
-        {topAnimes.map((anime) => (
+        {trandingAnimes.map((anime) => (
           <SwiperSlide key={anime.id}>
             <SingleHeroSlider anime={anime} />
           </SwiperSlide>

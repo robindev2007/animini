@@ -1,5 +1,5 @@
 "use clint";
-import { animeStoreT } from "@/types/anime.types";
+import { animeStoreDataT } from "@/types/anime/anime.types";
 import { setCookie } from "cookies-next";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -7,23 +7,27 @@ import { useEffect, useState } from "react";
 export const useAnimeState = () => {
   const pathname = usePathname();
 
-  const defaultAnimeIdState = pathname.split("/")[2];
-
-  const [activeEpState, setActiveEpState] = useState(1);
-  const [animeIdState, setAnimeIdState] = useState(defaultAnimeIdState);
-  const [animeEpId, setAnimeEpId] = useState(
-    defaultAnimeIdState + `-episode-${pathname.split("-ep")[1]}`
-  );
+  const [animeIdState, setAnimeIdState] = useState(0);
+  const [epState, setEpState] = useState(0);
+  const [animeStoreData, setAnimeStoreData] = useState<animeStoreDataT>();
 
   useEffect(() => {
     const animeId = pathname.split("/")[2];
-    const ep = Number(pathname.split("ep-")[1]);
-    const epId = animeId + `-episode-${pathname.split("/ep-")[1]}`;
-
-    setAnimeEpId(epId);
-    setAnimeIdState(animeId);
-    setActiveEpState(ep);
+    const animeEp = pathname.split("/")[3].split("-")[
+      pathname.split("/")[3].split("-").length - 1
+    ];
+    setEpState(Number(animeEp));
+    setAnimeIdState(Number(animeId));
   }, [typeof history !== "undefined" && history.state]);
 
-  return { activeEpState, animeIdState, animeEpId };
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const data =
+        JSON.parse(localStorage.getItem(animeIdState?.toString()) as string) ??
+        null;
+      setAnimeStoreData(data);
+    }
+  }, [epState]);
+
+  return { animeIdState, epState, animeStoreData };
 };
