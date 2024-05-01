@@ -91,6 +91,7 @@ const Watch = ({
       {loading || !videoUrl ? (
         <div className="aspect-video rounded-md bg-secondary flex items-center justify-center flex-col">
           <Image
+            unoptimized
             className="h-[20%] w-auto"
             src={"/images/pokimon-loading.gif"}
             height={600}
