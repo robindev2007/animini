@@ -8,8 +8,11 @@ import {
   trendingAnimeT,
 } from "@/types/anime/anime.types";
 import axios from "axios";
+import { unstable_noStore } from "next/cache";
 
 export const getTopAiringAnimes = async (limit?: number) => {
+  unstable_noStore();
+
   const url = `https://api.amvstr.me/api/v2/trending`;
 
   try {
@@ -98,6 +101,8 @@ export const getStrems = async ({
 };
 
 export const getTrandingAnimes = async (limit?: number) => {
+  unstable_noStore();
+
   const url = "https://api.amvstr.me/api/v2/trending";
 
   try {
@@ -114,6 +119,8 @@ export const getTrandingAnimes = async (limit?: number) => {
 };
 
 export const getSearchResult = async (search: string) => {
+  unstable_noStore();
+
   const url = "https://api.amvstr.me/api/v2/search";
 
   try {
