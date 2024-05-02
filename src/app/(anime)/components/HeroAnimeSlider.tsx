@@ -26,11 +26,12 @@ const HeroAnimeSlider = ({
           delay: 2000,
         }}
         modules={[Pagination]}>
-        {trandingAnimes.map((anime) => (
-          <SwiperSlide key={anime.id}>
-            <SingleHeroSlider anime={anime} />
-          </SwiperSlide>
-        ))}
+        {trandingAnimes &&
+          trandingAnimes.map((anime) => (
+            <SwiperSlide key={anime.id}>
+              <SingleHeroSlider anime={anime} />
+            </SwiperSlide>
+          ))}
       </Swiper>
     </div>
   );

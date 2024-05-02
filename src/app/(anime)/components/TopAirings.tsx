@@ -23,9 +23,10 @@ const TopAirings = ({ animes }: { animes: trendingAnimeT[] }) => {
         animate="animate"
         variants={containerVariants}
         className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-        {animes.map((anime, i) => (
-          <SingleAnimeCard key={anime.id} index={i} anime={anime} />
-        ))}
+        {animes &&
+          animes.map((anime, i) => (
+            <SingleAnimeCard key={anime.id} index={i} anime={anime} />
+          ))}
       </motion.div>
     </div>
   );
