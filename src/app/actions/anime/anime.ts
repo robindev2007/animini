@@ -13,7 +13,7 @@ import { unstable_noStore } from "next/cache";
 export const getTopAiringAnimes = async (limit?: number) => {
   unstable_noStore();
 
-  const url = `https://api.amvstr.me/api/v2/trending`;
+  const url = `https://amvstrm-api-9w3p.onrender.com/api/v2/trending`;
 
   try {
     const { data } = await axios.get(url, {
@@ -29,7 +29,7 @@ export const getTopAiringAnimes = async (limit?: number) => {
 };
 
 export const getAnimeData = async (id: string) => {
-  const infoUrl = `https://api-amvstrm.nyt92.eu.org/api/v2/info/${id}`;
+  const infoUrl = `https://amvstrm-api-9w3p.onrender.com/api/v2/info/${id}`;
 
   try {
     const { data }: { data: animeInfoT } = await axios.get(infoUrl);
@@ -40,7 +40,7 @@ export const getAnimeData = async (id: string) => {
     };
 
     const info = data;
-    const episodesUrl = `https://api-amvstrm.nyt92.eu.org/api/v1/episode/${info.id_provider.idGogo}`;
+    const episodesUrl = `https://amvstrm-api-9w3p.onrender.com/api/v1/episode/${info.id_provider.idGogo}`;
 
     const res = await getEpisodes(episodesUrl);
     const episodes = res.sort((a, b) => {
@@ -72,7 +72,7 @@ export const getStrems = async ({
   const getSingleStrem = async ({ epId }: { epId: string }) => {
     try {
       const { data } = await axios.get(
-        `https://api-amvstrm.nyt92.eu.org/api/v2/stream/${epId}`
+        `https://amvstrm-api-9w3p.onrender.com/api/v2/stream/${epId}`
       );
 
       if (!data) return null;
@@ -103,7 +103,7 @@ export const getStrems = async ({
 export const getTrandingAnimes = async (limit?: number) => {
   unstable_noStore();
 
-  const url = "https://api.amvstr.me/api/v2/trending";
+  const url = "https://amvstrm-api-9w3p.onrender.com/api/v2/trending";
 
   try {
     const { data } = await axios.get(url, {
@@ -121,7 +121,7 @@ export const getTrandingAnimes = async (limit?: number) => {
 export const getSearchResult = async (search: string) => {
   unstable_noStore();
 
-  const url = "https://api.amvstr.me/api/v2/search";
+  const url = "https://amvstrm-api-9w3p.onrender.com/api/v2/search";
 
   try {
     const { data } = await axios.get(url, {
