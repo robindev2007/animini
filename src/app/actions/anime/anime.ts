@@ -9,8 +9,9 @@ import {
 } from "@/types/anime/anime.types";
 import axios from "axios";
 import { unstable_noStore } from "next/cache";
+import { cache } from "react";
 
-export const getTopAiringAnimes = async (limit?: number) => {
+export const getTopAiringAnimes = cache(async (limit?: number) => {
   unstable_noStore();
 
   const url = `https://amvstrm-api-9w3p.onrender.com/api/v2/trending`;
@@ -22,14 +23,18 @@ export const getTopAiringAnimes = async (limit?: number) => {
       },
     });
 
+    const res = data.results.filter((anime: animeInfoT) => {
+      return anime;
+    });
+
     return data.results as trendingAnimeT[];
   } catch (error) {
     return null;
   }
-};
+});
 
-export const getAnimeData = async (id: string) => {
-  const infoUrl = `https://amvstrm-api-9w3p.onrender.com/api/v2/info/${id}`;
+export const getAnimeData = cache(async (id: string) => {
+  const infoUrl = `https://prod-2-amvstrm-api.nyt92.eu.org/api/v2/info/${id}`;
 
   try {
     const { data }: { data: animeInfoT } = await axios.get(infoUrl);
@@ -58,47 +63,49 @@ export const getAnimeData = async (id: string) => {
   } catch (error) {
     return error;
   }
-};
+});
 
-export const getStrems = async ({
-  idSub,
-  idDub,
-  ep,
-}: {
-  idSub: string;
-  idDub: string;
-  ep: string;
-}) => {
-  const getSingleStrem = async ({ epId }: { epId: string }) => {
-    try {
-      const { data } = await axios.get(
-        `https://amvstrm-api-9w3p.onrender.com/api/v2/stream/${epId}`
-      );
+export const getStrems = cache(
+  async ({
+    idSub,
+    idDub,
+    ep,
+  }: {
+    idSub: string;
+    idDub: string;
+    ep: string;
+  }) => {
+    const getSingleStrem = async ({ epId }: { epId: string }) => {
+      try {
+        const { data } = await axios.get(
+          `https://prod-2-amvstrm-api.nyt92.eu.org/api/v2/stream/${epId}`
+        );
 
-      if (!data) return null;
+        if (!data) return null;
 
-      const res = Object.entries(data.stream.multi).map(([key, value]) => ({
-        title: key,
-        strems: value,
-      }));
+        const res = Object.entries(data.stream.multi).map(([key, value]) => ({
+          title: key,
+          strems: value,
+        }));
 
-      return res as unknown as singleStremT;
-    } catch (error) {
-      return null;
-    }
-  };
+        return data.results as unknown as singleStremT;
+      } catch (error) {
+        return null;
+      }
+    };
 
-  const subStrems = await getSingleStrem({ epId: idSub + `-episode-${ep}` });
-  const dubStrems = await getSingleStrem({ epId: idDub + `-episode-${ep}` });
+    const subStrems = await getSingleStrem({ epId: idSub + `-episode-${ep}` });
+    const dubStrems = await getSingleStrem({ epId: idDub + `-episode-${ep}` });
 
-  const responceData = [
-    subStrems && { title: "Sub", strems: subStrems },
-    dubStrems && { title: "Dub", strems: dubStrems },
-  ];
+    const responceData = [
+      subStrems && { title: "Sub", strems: subStrems },
+      dubStrems && { title: "Dub", strems: dubStrems },
+    ];
 
-  const resData = { sub: subStrems, dub: dubStrems };
-  return resData as typeof resData;
-};
+    const resData = { sub: subStrems, dub: dubStrems };
+    return resData as typeof resData;
+  }
+);
 
 export const getTrandingAnimes = async (limit?: number) => {
   unstable_noStore();
@@ -111,6 +118,8 @@ export const getTrandingAnimes = async (limit?: number) => {
         limit: limit ? limit : 10,
       },
     });
+
+    const res = data.results.filter((anime: animeInfoT) => anime.bannerImage);
 
     return data.results as animeInfoT[];
   } catch (error) {

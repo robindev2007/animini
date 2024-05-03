@@ -7,6 +7,8 @@ import { Metadata, ResolvingMetadata } from "next";
 import { getAnimeData, getStrems } from "@/app/actions/anime/anime";
 import { animeInfoT, episodeT, singleStremT } from "@/types/anime/anime.types";
 
+export const revalidate = 60 * 60 * 24;
+
 const AnimeEpPage = async ({
   params,
 }: {
@@ -17,10 +19,12 @@ const AnimeEpPage = async ({
     episodes: episodeT[];
   };
 
+  if (!info?.id_provider?.idGogo) return "anime not found";
+
   const strems = await getStrems({
-    idSub: info.id_provider.idGogo,
-    idDub: info.id_provider.idGogoDub,
-    ep: params.ep.split("-")[params.ep.split("-").length - 1],
+    idSub: info?.id_provider.idGogo,
+    idDub: info?.id_provider.idGogoDub,
+    ep: params.ep,
   });
 
   return (

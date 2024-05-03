@@ -1,9 +1,9 @@
 "use client";
-import SingleAnimeCard from "@/components/common/SingleAnimeCard";
 import GridBg from "@/components/ui/grid-background";
 import React from "react";
 import { motion } from "framer-motion";
 import { trendingAnimeT } from "@/types/anime/anime.types";
+import AnimeCard from "../../../components/common/AnimeCard";
 
 const TopAirings = ({ animes }: { animes: trendingAnimeT[] }) => {
   const containerVariants = {
@@ -18,16 +18,13 @@ const TopAirings = ({ animes }: { animes: trendingAnimeT[] }) => {
   return (
     <div className="relative">
       <h2 className="py-3 text-2xl font-semibold"> Top Airing animes </h2>
-      <motion.div
-        initial="initial"
-        animate="animate"
-        variants={containerVariants}
-        className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
         {animes &&
-          animes.map((anime, i) => (
-            <SingleAnimeCard key={anime.id} index={i} anime={anime} />
+          animes.length &&
+          animes.map((anime: any, i: any) => (
+            <AnimeCard key={anime.id} index={i} anime={anime} />
           ))}
-      </motion.div>
+      </div>
     </div>
   );
 };
