@@ -44,8 +44,7 @@ const AnimeCard = ({ anime, index }: { anime: animeInfoT; index: number }) => {
         </div>
         <div className="">
           <h2 className="line-clamp-2 text-sm font-semibold">
-            {/* {anime.title.english ? anime.title.english : anime.title.native} */}
-            {anime.id_provider?.idGogo}
+            {anime.title.english ? anime.title.english : anime.title.native}
           </h2>
         </div>
       </Link>
