@@ -2,14 +2,19 @@
 import React, { useState } from "react";
 import SearchMenu from "./SearchMenu";
 import Link from "next/link";
-import { FaMagnifyingGlass } from "react-icons/fa6";
-import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export const Header = () => {
   return (
     <div className="py-2 flex items-center justify-between gap-2 relative">
       <Link href={"/"}>
-        <h2 className="text-purple-500 text-lg font-bold">ZAnime</h2>
+        <Image
+          src={"/images/logo-main.png"}
+          height={200}
+          width={600}
+          alt="zanime logo"
+          className="h-6 w-full"
+        />
       </Link>
 
       <SearchMenu />

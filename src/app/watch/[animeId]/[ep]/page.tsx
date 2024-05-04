@@ -22,8 +22,8 @@ const AnimeEpPage = async ({
   if (!info?.id_provider?.idGogo) return "anime not found";
 
   const strems = await getStrems({
-    idSub: info?.id_provider.idGogo,
-    idDub: info?.id_provider.idGogoDub,
+    idSub: info.id_provider.idGogo,
+    idDub: info.id_provider.idGogoDub,
     ep: params.ep,
   });
 

@@ -65,7 +65,7 @@ const SearchMenu = () => {
             />
           </div>
         )}
-        {searchResults && searchResults.length && (
+        {showResults && searchResults && searchResults.length && (
           <SearchResults results={searchResults} />
         )}
       </div>

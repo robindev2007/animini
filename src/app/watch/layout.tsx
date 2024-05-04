@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import StateProvider from "../reduxStore/StateProvider";
-import { Header } from "./components/header/Header";
+import { Header } from "../../components/page/header/Header";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

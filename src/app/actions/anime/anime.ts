@@ -88,7 +88,7 @@ export const getStrems = cache(
           strems: value,
         }));
 
-        return data.results as unknown as singleStremT;
+        return res as unknown as singleStremT;
       } catch (error) {
         return null;
       }
@@ -103,7 +103,7 @@ export const getStrems = cache(
     ];
 
     const resData = { sub: subStrems, dub: dubStrems };
-    return resData as typeof resData;
+    return resData;
   }
 );
 
