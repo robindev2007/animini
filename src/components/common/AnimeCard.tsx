@@ -5,8 +5,16 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Badge } from "../ui/badge";
 import { animeInfoT } from "@/types/anime/anime.types";
+import { getAnimeSubName } from "@/utils/utils";
+import { animeRes } from "@/app/(anime)/anime/@topairing/page";
 
-const AnimeCard = ({ anime, index }: { anime: animeInfoT; index: number }) => {
+const AnimeCard = ({
+  anime,
+  index,
+}: {
+  anime: animeRes["results"][0];
+  index: number;
+}) => {
   const itemVariants = {
     initial: {
       opacity: 0,
@@ -28,25 +36,19 @@ const AnimeCard = ({ anime, index }: { anime: animeInfoT; index: number }) => {
       animate="animate"
       viewport={{ once: true }}>
       <Link
-        href={`/watch/${anime.id}`}
+        href={`/watch/${getAnimeSubName(anime.id)}`}
         className="transition-all duration-200 ease-out rounded h-full hover:shadow-2xl p-2 flex flex-col shadow hover:border-primary/60 gap-2">
         <div className="h-72 md:h-56 border border-border/80 pxshrink-0 overflow-hidden rounded-[inherit]">
           <Image
-            src={
-              anime.coverImage.extraLarge
-                ? anime.coverImage.extraLarge
-                : anime.coverImage.medium
-            }
+            src={anime.image}
             height={600}
             width={600}
-            alt={anime.title.english ? anime.title.english : anime.title.native}
+            alt={anime.title}
             className="h-full object-cover"
           />
         </div>
         <div className="">
-          <h2 className="line-clamp-2 text-sm font-semibold">
-            {anime.title.english ? anime.title.english : anime.title.native}
-          </h2>
+          <h2 className="line-clamp-2 text-sm font-semibold">{anime.title}</h2>
         </div>
       </Link>
     </motion.div>
