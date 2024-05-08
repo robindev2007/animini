@@ -15,6 +15,7 @@ const Servers = ({
         {servers?.length &&
           servers?.map((server) => (
             <Button
+              key={server.name}
               onClick={() => setVideoUrl(server.url)}
               variant={"secondary"}>
               {server.name}

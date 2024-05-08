@@ -26,6 +26,7 @@ const Episodes = ({
         {episodes &&
           episodes.map((ep) => (
             <EpisodeButton
+              key={ep.number}
               ep={ep}
               activeEp={shallowRouteState}
               pushNewEp={pushNewEp}
