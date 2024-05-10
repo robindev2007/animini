@@ -13,13 +13,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { animeStore } from "@/utils/setAnimeLocalstore";
+import { cn } from "@/lib/utils";
 
 const Episodes = ({
   episodes,
   currentEp,
+  animeStore,
 }: {
   episodes: animeInfo["episodes"] | undefined;
   currentEp: number;
+  animeStore: animeStore | undefined;
 }) => {
   const { shallowRoute, shallowRouteState } = useShallowRoute();
   const { setNewEpId } = useAnimeState();
@@ -32,27 +36,35 @@ const Episodes = ({
     setNewEpId(ep.id);
   };
 
-  const num = 199;
   return (
-    <div>
-      <Select>
+    <div className="space-y-2">
+      <Select
+        defaultValue={epStart.toString()}
+        onValueChange={(value) => setEpStart(Number(value))}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Theme" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="light">Light</SelectItem>
+          {Array.from({
+            length: Math.ceil((episodes?.length as number) / 100),
+          }).map((arr, i) => (
+            <SelectItem key={i} value={i == 0 ? `0` : `${i}00`}>
+              {i === 0 ? `1-100` : `${i}01-${i + 1}00`}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
       <div className="grid grid-cols-10 gap-2">
         {episodes?.length &&
           episodes
-            .slice(epStart, epStart + 100)
+            .slice(Number(epStart), Number(epStart) + 100)
             .map((ep) => (
               <EpisodeButton
                 key={ep.number}
                 ep={ep}
                 activeEp={shallowRouteState}
                 pushNewEp={pushNewEp}
+                watched={animeStore?.watchedEpisodes?.includes(ep.number)}
               />
             ))}
       </div>

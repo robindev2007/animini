@@ -1,32 +1,43 @@
 import AnimeCard from "@/components/common/AnimeCard";
 import React from "react";
 
-export type animeRes = {
+export interface Anime {
+  id: string;
+  title: string;
+  image: string;
+  url: string;
+  genres: string[];
+}
+
+export interface animeRes {
   currentPage: number;
   hasNextPage: boolean;
-  results: [
-    {
-      id: string;
-      title: string;
-      image: string;
-      url: string;
-      genres: string[];
-    }
-  ];
-};
+  results: Anime[];
+}
 
 const TopAiring = async () => {
+  const animes: Anime[] | undefined = [];
   const animeDataRes = await fetch(
     "https://animetize-api.vercel.app/top-airing"
   );
 
-  const animes = (await animeDataRes.json()) as animeRes;
+  const animes1 = (await animeDataRes.json()) as animeRes;
+
+  animes.push(...animes1.results);
+
+  const res2 = await fetch(
+    "https://animetize-api.vercel.app/top-airing?page=2"
+  );
+
+  const animes2 = (await res2.json()) as animeRes;
+
+  animes.push(...animes2.results);
 
   return (
     <div>
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-        {animes.results &&
-          animes.results.map((anime, i) => (
+        {animes &&
+          animes.map((anime, i) => (
             <AnimeCard anime={anime} index={i} key={anime.id} />
           ))}
       </div>

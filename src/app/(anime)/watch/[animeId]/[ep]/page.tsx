@@ -6,6 +6,8 @@ import Servers from "./components/Servers";
 import { useAnimate } from "framer-motion";
 import { useAnimeState } from "@/components/hook/animeState";
 import VideoPlayer from "./components/VideoPlayer";
+import WatchingDetails from "./components/Episodes/WatchingDetails";
+import { animeStore, setAnimeStore } from "@/utils/setAnimeLocalstore";
 
 export type animeInfo = {
   id: string;
@@ -47,6 +49,9 @@ const EpPage = ({ params }: { params: { animeId: string; ep: string } }) => {
   const [videoUrl, setVideoUrl] = useState("");
   const [currentEp, setCurrentEp] = useState(params.ep);
   const [loading, setLoading] = useState(false);
+  const [animeStoreState, setAnimestoreState] = useState<animeStore>();
+
+  const localstore = typeof window !== "undefined" ? localStorage : undefined;
 
   const { shallowRouteState } = useShallowRoute();
 
@@ -63,8 +68,24 @@ const EpPage = ({ params }: { params: { animeId: string; ep: string } }) => {
     getData();
   }, []);
 
+  const handleEpchange = () => {};
+
   useEffect(() => {
     setCurrentEp(shallowRouteState);
+    setAnimeStore({
+      id: params.animeId,
+      currentEp: shallowRouteState ? Number(shallowRouteState) : 1,
+      watchedEpisodes: [Number(shallowRouteState)],
+    });
+
+    if (localstore) {
+      const storedData = localstore.getItem(params.animeId);
+      const data = storedData
+        ? (JSON.parse(storedData) as animeStore)
+        : undefined;
+      setAnimestoreState(data);
+    }
+
     const getEpStrem = async () => {
       setLoading(true);
       if (!params.animeId || !params.ep) return;
@@ -110,17 +131,20 @@ const EpPage = ({ params }: { params: { animeId: string; ep: string } }) => {
     }
   };
 
-  const { animeId, epId } = useAnimeState();
-
   return (
     <div className="flex gap-3 flex-col">
       <VideoPlayer loading={loading} url={videoUrl} />
+      <WatchingDetails ep={currentEp} />
       <Servers
         allServers={servers}
         setVideoUrl={setNextUrl}
         activeUrl={videoUrl}
       />
-      <Episodes currentEp={Number(currentEp)} episodes={animeInfo?.episodes} />
+      <Episodes
+        currentEp={Number(currentEp)}
+        episodes={animeInfo?.episodes}
+        animeStore={animeStoreState}
+      />
     </div>
   );
 };
