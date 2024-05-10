@@ -1,10 +1,10 @@
 import React from "react";
 import ReactPlayer from "react-player";
 
-const VideoPlayer = ({ url }: { url: string }) => {
+const VideoPlayer = ({ url, loading }: { url: string; loading: boolean }) => {
   return (
     <div className="h-full rounded overflow-hidden">
-      {url ? (
+      {url && !loading ? (
         <iframe
           src={url}
           width={"100%"}

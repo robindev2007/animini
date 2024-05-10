@@ -1,23 +1,13 @@
-"use client";
-import React, { useState } from "react";
-import SearchMenu from "./SearchMenu";
-import Link from "next/link";
-import Image from "next/image";
+import React from "react";
+import HeaderSearch from "./HeaderSearch";
 
-export const Header = () => {
+const Header = () => {
   return (
-    <div className="py-2 flex items-center justify-between gap-2 relative">
-      <Link href={"/"}>
-        <Image
-          src={"/images/logo-main.png"}
-          height={200}
-          width={600}
-          alt="zanime logo"
-          className="h-6 w-full"
-        />
-      </Link>
-
-      <SearchMenu />
+    <div className="flex gap-2 items-center justify-between py-3 relative">
+      <div className="text-indigo-600 text-xl font-semibold">MiniAnime</div>
+      <HeaderSearch />
     </div>
   );
 };
+
+export default Header;

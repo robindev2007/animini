@@ -29,17 +29,24 @@ export type animeInfo = {
   ];
 };
 
-export type servers = [
-  {
-    name: string;
-    url: string;
-  }
-];
+export type servers = {
+  title: string;
+  server:
+    | [
+        {
+          name: string;
+          url: string;
+        }
+      ]
+    | null;
+}[];
 
 const EpPage = ({ params }: { params: { animeId: string; ep: string } }) => {
   const [animeInfo, setAnimeInfo] = useState<animeInfo>();
   const [servers, setServers] = useState<servers>();
   const [videoUrl, setVideoUrl] = useState("");
+  const [currentEp, setCurrentEp] = useState(params.ep);
+  const [loading, setLoading] = useState(false);
 
   const { shallowRouteState } = useShallowRoute();
 
@@ -50,35 +57,70 @@ const EpPage = ({ params }: { params: { animeId: string; ep: string } }) => {
       );
 
       const data = await res.json();
+      console.log(data);
       setAnimeInfo(data);
     };
     getData();
   }, []);
 
   useEffect(() => {
+    setCurrentEp(shallowRouteState);
     const getEpStrem = async () => {
-      const res = await fetch(
-        `https://animetize-api.vercel.app/servers/${animeInfo?.id}-episode-${shallowRouteState}`
-      );
-      const data = await res.json();
-      console.log(data);
-      setServers(data);
+      setLoading(true);
+      if (!params.animeId || !params.ep) return;
+      const subUrl = `https://animetize-api.vercel.app/servers/${params.animeId}-episode-${currentEp}`;
+      const dubUrl = `https://animetize-api.vercel.app/servers/${params.animeId}-dub-episode-${currentEp}`;
+
+      const subServer = await getServer(subUrl);
+      const dubServer = await getServer(dubUrl);
+
+      const subdata = { title: "Sub", server: subServer };
+      const dubdata = { title: "Dub", server: dubServer };
+
+      const d = [subdata, dubdata];
+      setServers(d);
+      const newVidUrl =
+        dubdata && dubdata.server?.length
+          ? dubdata.server[0].url
+          : subdata && subdata.server?.length
+          ? subdata.server[0].url
+          : "";
+      setNextUrl(newVidUrl);
+      setLoading(false);
     };
     getEpStrem();
   }, [shallowRouteState]);
 
-  const setNVideoUrl = (url: string) => {
+  const setNextUrl = (url: string) => {
     setVideoUrl(url);
+  };
+
+  const getServer = async (url: string) => {
+    try {
+      const res = await fetch(url);
+      const data = (await res.json()) as [
+        {
+          name: string;
+          url: string;
+        }
+      ];
+      return data;
+    } catch (error) {
+      return null;
+    }
   };
 
   const { animeId, epId } = useAnimeState();
 
   return (
     <div className="flex gap-3 flex-col">
-      {videoUrl}
-      <VideoPlayer url={videoUrl} />
-      <Servers servers={servers} setVideoUrl={setNVideoUrl} />
-      <Episodes episodes={animeInfo?.episodes} />
+      <VideoPlayer loading={loading} url={videoUrl} />
+      <Servers
+        allServers={servers}
+        setVideoUrl={setNextUrl}
+        activeUrl={videoUrl}
+      />
+      <Episodes currentEp={Number(currentEp)} episodes={animeInfo?.episodes} />
     </div>
   );
 };

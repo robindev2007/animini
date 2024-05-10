@@ -1,3 +1,4 @@
+import Header from "@/components/page/header/Header";
 import React, { ReactNode } from "react";
 
 const AnimeLayout = ({

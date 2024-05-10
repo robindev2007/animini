@@ -1,4 +1,5 @@
 "use client";
+import { ReducerType } from "@reduxjs/toolkit";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -22,27 +23,35 @@ export default function useShallowRoute() {
     },
   };
 
+  // useEffect(() => {
+  //   const handleShallowRouteChange = (event: { detail: string }) => {
+  //     const newUrl = event.detail;
+  //     console.log("change ep");
+  //     setShallowRouteState(newUrl);
+  //     // Perform actions based on the shallow route change
+  //   };
+
+  //   window.addEventListener(
+  //     "shallowRouteChange",
+  //     handleShallowRouteChange as any
+  //   );
+
+  //   return () => {
+  //     // Cleanup function to remove the event listener when the component unmounts
+  //     window.removeEventListener(
+  //       "shallowRouteChange",
+  //       handleShallowRouteChange as any
+  //     );
+  //   };
+  // }, []);
+
   useEffect(() => {
-    const handleShallowRouteChange = (event: { detail: string }) => {
-      const newUrl = event.detail;
-      console.log("change ep");
-      setShallowRouteState(newUrl);
-      // Perform actions based on the shallow route change
-    };
-
-    window.addEventListener(
-      "shallowRouteChange",
-      handleShallowRouteChange as any
-    );
-
-    return () => {
-      // Cleanup function to remove the event listener when the component unmounts
-      window.removeEventListener(
-        "shallowRouteChange",
-        handleShallowRouteChange as any
-      );
-    };
-  }, []);
+    const pathnameSplit = pathname.split("/");
+    const ep = pathnameSplit[pathnameSplit.length - 1];
+    if(shallowRouteState == ep) return
+    setShallowRouteState(ep);
+    console.log("new ep " + ep);
+  }, [typeof window !== "undefined" && history.state]);
 
   return { shallowRoute, shallowRouteState };
 }
