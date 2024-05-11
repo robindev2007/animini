@@ -12,15 +12,16 @@ const Servers = ({
   activeUrl?: string;
 }) => {
   return (
-    <div className="flex gap-2 flex-col">
+    <div className="flex gap-3 flex-col">
       {allServers?.map(
         (servers) =>
           servers.server?.length && (
-            <div key={servers.title} className="flex gap-3 items-center">
+            <div key={servers.title} className="flex gap-2 items-center">
               <p className="font-medium">{servers.title}</p>
               <div className="flex gap-2 flex-wrap">
                 {servers.server?.map((ser) => (
                   <Button
+                    className="scale-80 md:scale-100"
                     key={ser.name}
                     onClick={() => setVideoUrl(ser.url)}
                     variant={activeUrl == ser.url ? "default" : "secondary"}>

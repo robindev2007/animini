@@ -54,7 +54,7 @@ const Episodes = ({
           ))}
         </SelectContent>
       </Select>
-      <div className="grid grid-cols-10 gap-2">
+      <div className="grid md:grid-cols-10 grid-cols-5 gap-2">
         {episodes?.length &&
           episodes
             .slice(Number(epStart), Number(epStart) + 100)

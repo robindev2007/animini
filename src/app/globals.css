@@ -74,3 +74,13 @@
     rgba(0, 0, 0, 0.4) 100%
   );
 }
+
+iframe,
+.watch_play,
+.play-video {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.watch_play {
+}

@@ -125,6 +125,7 @@ const EpPage = ({ params }: { params: { animeId: string; ep: string } }) => {
           url: string;
         }
       ];
+      console.log(data);
       return data;
     } catch (error) {
       return null;
