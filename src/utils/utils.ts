@@ -3,7 +3,7 @@ export function timeout(delay: number) {
 }
 
 export const getAnimeSubName = (name: string) => {
-  const arr = name.split("-dub");
+  const arr = name.split("-dub")[0];
 
   return arr;
 };

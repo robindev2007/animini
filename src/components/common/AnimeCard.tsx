@@ -38,15 +38,13 @@ const AnimeCard = ({
       <Link
         href={`/watch/${getAnimeSubName(anime.id)}`}
         className="transition-all duration-200 ease-out rounded h-full hover:shadow-2xl p-2 flex flex-col shadow hover:border-primary/60 gap-2">
-        <div className="h-72 md:h-56 border border-border/80 pxshrink-0 overflow-hidden rounded-[inherit]">
-          <Image
-            src={anime.image}
-            height={600}
-            width={600}
-            alt={anime.title}
-            className="h-full object-cover"
-          />
-        </div>
+        <Image
+          src={anime.image}
+          width={400}
+          height={600}
+          alt={anime.title}
+          className="border border-border/80 pxshrink-0 overflow-hidden rounded-[inherit] aspect-[4/6]"
+        />
         <div className="">
           <h2 className="line-clamp-2 text-sm font-semibold">{anime.title}</h2>
         </div>

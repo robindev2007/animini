@@ -1,153 +1,124 @@
 "use client";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Episodes from "./components/Episodes/Episodes";
 import useShallowRoute from "@/components/hook/useShalowRoute";
-import Servers from "./components/Servers";
-import { useAnimate } from "framer-motion";
-import { useAnimeState } from "@/components/hook/animeState";
+import { usePathname } from "next/navigation";
 import VideoPlayer from "./components/VideoPlayer";
-import WatchingDetails from "./components/Episodes/WatchingDetails";
-import { animeStore, setAnimeStore } from "@/utils/setAnimeLocalstore";
+import Servers from "./components/Servers";
 
-export type animeInfo = {
-  id: string;
-  title: string;
-  url: string;
-  image: string;
-  releaseDate: string; // or null
-  description: string; // or null
-  genres: [string];
-  subOrDub: "sub";
-  type: string; // or null
-  status: "Ongoing";
-  otherName: string; // or null
-  totalEpisodes: number;
-  episodes: [
-    {
-      id: string;
-      number: 0;
-      url: string;
-    }
-  ];
+export type ep = { id: string; title: string };
+export type stream = {
+  stream: {
+    multi: {
+      main: {
+        url: string;
+        label: string;
+        isM3U8: boolean;
+        quality: string;
+      };
+      backup: {
+        url: string;
+        label: string;
+        isM3U8: boolean;
+        quality: string;
+      };
+    };
+    tracks: string;
+  };
+};
+export type server = {
+  main: {
+    url: string;
+    label: string;
+    isM3U8: boolean;
+    quality: string;
+  };
+  backup: {
+    url: string;
+    label: string;
+    isM3U8: boolean;
+    quality: string;
+  };
 };
 
-export type servers = {
-  title: string;
-  server:
-    | [
-        {
-          name: string;
-          url: string;
-        }
-      ]
-    | null;
+export type serversWithTitle = {
+  sub?: server;
+  dub?: server;
 }[];
 
-const EpPage = ({ params }: { params: { animeId: string; ep: string } }) => {
-  const [animeInfo, setAnimeInfo] = useState<animeInfo>();
-  const [servers, setServers] = useState<servers>();
+const AnimeWatchPage = ({
+  params: { animeId, ep },
+}: {
+  params: { animeId: string; ep: string };
+}) => {
+  const [episodes, setEpisodes] = useState<ep[]>();
+  const [currentEp, setCurrentEp] = useState<ep>();
   const [videoUrl, setVideoUrl] = useState("");
-  const [currentEp, setCurrentEp] = useState(params.ep);
   const [loading, setLoading] = useState(false);
-  const [animeStoreState, setAnimestoreState] = useState<animeStore>();
-
-  const localstore = typeof window !== "undefined" ? localStorage : undefined;
+  const [servers, setServers] = useState<serversWithTitle>();
 
   const { shallowRouteState } = useShallowRoute();
+  const pathname = usePathname();
 
   useEffect(() => {
     const getData = async () => {
-      const res = await fetch(
-        `https://animetize-api.vercel.app/info/${params.animeId}`
+      const { data }: { data: { episodes: ep[] } } = await axios.get(
+        `https://prod-2-amvstrm-api.nyt92.eu.org/api/v1/episode/${animeId}`
       );
-
-      const data = await res.json();
+      setEpisodes(data.episodes.reverse());
       console.log(data);
-      setAnimeInfo(data);
     };
     getData();
   }, []);
 
-  const handleEpchange = () => {};
-
   useEffect(() => {
-    setCurrentEp(shallowRouteState);
-    setAnimeStore({
-      id: params.animeId,
-      currentEp: shallowRouteState ? Number(shallowRouteState) : 1,
-      watchedEpisodes: [Number(shallowRouteState)],
-    });
+    const newEpId = pathname.split("/").slice(-1)[0];
+    const subId = animeId + "-episode-" + newEpId;
+    const dubId = animeId + "-dub-episode-" + newEpId;
 
-    if (localstore) {
-      const storedData = localstore.getItem(params.animeId);
-      const data = storedData
-        ? (JSON.parse(storedData) as animeStore)
-        : undefined;
-      setAnimestoreState(data);
-    }
-
-    const getEpStrem = async () => {
+    const getAllStrems = async () => {
       setLoading(true);
-      if (!params.animeId || !params.ep) return;
-      const subUrl = `https://animetize-api.vercel.app/servers/${params.animeId}-episode-${currentEp}`;
-      const dubUrl = `https://animetize-api.vercel.app/servers/${params.animeId}-dub-episode-${currentEp}`;
-
-      const subServer = await getServer(subUrl);
-      const dubServer = await getServer(dubUrl);
-
-      const subdata = { title: "Sub", server: subServer };
-      const dubdata = { title: "Dub", server: dubServer };
-
-      const d = [subdata, dubdata];
-      setServers(d);
-      const newVidUrl =
-        dubdata && dubdata.server?.length
-          ? dubdata.server[0].url
-          : subdata && subdata.server?.length
-          ? subdata.server[0].url
-          : "";
-      setNextUrl(newVidUrl);
+      const subStrems = await getStrem(subId);
+      const dubStrems = await getStrem(dubId);
+      const newServers = [{ sub: subStrems }, { dub: dubStrems }];
+      setServers(newServers);
+      console.log(newServers);
+      const newUrl = dubStrems ? dubStrems.main.url : subStrems?.main.url || "";
+      setVideoUrl(newUrl);
       setLoading(false);
     };
-    getEpStrem();
+    getAllStrems();
   }, [shallowRouteState]);
 
-  const setNextUrl = (url: string) => {
-    setVideoUrl(url);
-  };
-
-  const getServer = async (url: string) => {
+  const getStrem = async (animeEpId: string) => {
+    // get streams
     try {
-      const res = await fetch(url);
-      const data = (await res.json()) as [
-        {
-          name: string;
-          url: string;
-        }
-      ];
-      console.log(data);
-      return data;
+      const { data } = (await axios.get(
+        `https://prod-2-amvstrm-api.nyt92.eu.org/api/v2/stream/${animeEpId}`
+      )) as { data: stream };
+
+      return data.stream.multi as server;
     } catch (error) {
-      return null;
+      return undefined;
     }
   };
 
   return (
-    <div className="flex gap-3 flex-col">
-      <VideoPlayer loading={loading} url={videoUrl} />
-      <WatchingDetails ep={currentEp} />
+    <div className="space-y-2">
+      <VideoPlayer url={videoUrl} loading={loading} />
       <Servers
         allServers={servers}
-        setVideoUrl={setNextUrl}
+        setVideoUrl={setVideoUrl}
         activeUrl={videoUrl}
       />
       <Episodes
-        currentEp={Number(currentEp)}
-        episodes={animeInfo?.episodes}
-        animeStore={animeStoreState}
+        episodes={episodes}
+        currentEp={Number(ep)}
+        setNewEp={setCurrentEp}
       />
     </div>
   );
 };
 
-export default EpPage;
+export default AnimeWatchPage;

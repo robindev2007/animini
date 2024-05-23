@@ -1,10 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { animeInfo } from "../../page";
 import EpisodeButton from "./EpisodeButton";
 import useShallowRoute from "@/components/hook/useShalowRoute";
-import { useAnimate } from "framer-motion";
 import { useAnimeState } from "@/components/hook/animeState";
 import {
   Select,
@@ -14,16 +11,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { animeStore } from "@/utils/setAnimeLocalstore";
-import { cn } from "@/lib/utils";
+import { ep } from "../../page";
 
 const Episodes = ({
   episodes,
   currentEp,
   animeStore,
+  setNewEp,
 }: {
-  episodes: animeInfo["episodes"] | undefined;
+  episodes: ep[] | undefined;
   currentEp: number;
-  animeStore: animeStore | undefined;
+  animeStore?: animeStore | undefined;
+  setNewEp: React.Dispatch<React.SetStateAction<ep | undefined>>;
 }) => {
   const { shallowRoute, shallowRouteState } = useShallowRoute();
   const { setNewEpId } = useAnimeState();
@@ -31,9 +30,10 @@ const Episodes = ({
     Math.ceil(currentEp / 100) * 100 - 100
   );
 
-  const pushNewEp = (ep: animeInfo["episodes"][0]) => {
-    shallowRoute.push(ep.number.toString());
+  const pushNewEp = (ep: ep) => {
+    shallowRoute.push(ep.id.split("-").slice(-1).toString());
     setNewEpId(ep.id);
+    setNewEp(ep);
   };
 
   return (
@@ -56,17 +56,15 @@ const Episodes = ({
       </Select>
       <div className="grid md:grid-cols-10 grid-cols-5 gap-2">
         {episodes?.length &&
-          episodes
-            .slice(Number(epStart), Number(epStart) + 100)
-            .map((ep) => (
-              <EpisodeButton
-                key={ep.number}
-                ep={ep}
-                activeEp={shallowRouteState}
-                pushNewEp={pushNewEp}
-                watched={animeStore?.watchedEpisodes?.includes(ep.number)}
-              />
-            ))}
+          episodes.slice(Number(epStart), Number(epStart) + 100).map((ep) => (
+            <EpisodeButton
+              key={ep.id}
+              ep={ep}
+              activeEp={shallowRouteState}
+              pushNewEp={pushNewEp}
+              // watched={animeStore?.watchedEpisodes?.includes(ep.number)}
+            />
+          ))}
       </div>
     </div>
   );

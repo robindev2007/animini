@@ -2,6 +2,7 @@ import React from "react";
 import { searchRes } from "./HeaderSearch";
 import Image from "next/image";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 const HeaderSearchResultCard = ({
   anime,
@@ -18,8 +19,14 @@ const HeaderSearchResultCard = ({
       <div className="h-28 w-24 overflow-hidden rounded">
         <Image src={anime.image} height={400} width={200} alt={anime.title} />
       </div>
-      <div>
+      <div className="flex flex-col">
         <p>{anime.title}</p>
+        <div className="text-sm text-muted-foreground flex flex-col mt-auto">
+          <span>{anime.releaseDate}</span>
+          <Badge variant={"outline"} className="w-fit m-0">
+            {anime.subOrDub}
+          </Badge>
+        </div>
       </div>
     </Link>
   );

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { animeInfo } from "../../page";
+import { ep } from "../../page";
 import { Button } from "@/components/ui/button";
 import useshalowRoute from "@/components/hook/useShalowRoute";
 import { cn } from "@/lib/utils";
@@ -11,9 +11,9 @@ const EpisodeButton = ({
   pushNewEp,
   watched,
 }: {
-  ep: animeInfo["episodes"][0];
+  ep: ep;
   activeEp: string;
-  pushNewEp: (ep: animeInfo["episodes"][0]) => void;
+  pushNewEp: (ep: ep) => void;
   watched?: boolean;
 }) => {
   const handleClick = () => {
@@ -24,12 +24,16 @@ const EpisodeButton = ({
     <Button
       onClick={handleClick}
       variant={
-        activeEp == ep.number.toString() || watched ? "default" : "secondary"
+        activeEp == ep.id.split("-").slice(-1).toString() || watched
+          ? "default"
+          : "secondary"
       }
       className={cn(
-        watched && activeEp !== ep.number.toString() && "opacity-50"
+        watched &&
+          activeEp !== ep.id.split("-").slice(-1).toString() &&
+          "opacity-50"
       )}>
-      {ep.number}
+      {ep.id.split("-").slice(-1).toString()}
     </Button>
   );
 };
