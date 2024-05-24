@@ -6,6 +6,7 @@ import useShallowRoute from "@/components/hook/useShalowRoute";
 import { usePathname } from "next/navigation";
 import VideoPlayer from "./components/VideoPlayer";
 import Servers from "./components/Servers";
+import WatchingDetails from "./components/Episodes/WatchingDetails";
 
 export type ep = { id: string; title: string };
 export type stream = {
@@ -64,7 +65,7 @@ const AnimeWatchPage = ({
   useEffect(() => {
     const getData = async () => {
       const { data }: { data: { episodes: ep[] } } = await axios.get(
-        `https://prod-2-amvstrm-api.nyt92.eu.org/api/v1/episode/${animeId}`,
+        `https://api.amvstr.me/api/v1/episode/${animeId}`,
         {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -100,7 +101,7 @@ const AnimeWatchPage = ({
     // get streams
     try {
       const { data } = (await axios.get(
-        `https://prod-2-amvstrm-api.nyt92.eu.org/api/v2/stream/${animeEpId}`,
+        `https://api.amvstr.me/api/v2/stream/${animeEpId}`,
         {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -117,6 +118,7 @@ const AnimeWatchPage = ({
   return (
     <div className="space-y-2">
       <VideoPlayer url={videoUrl} loading={loading} />
+      <WatchingDetails ep={pathname.split("/").splice(-1)[0]} />
       <Servers
         allServers={servers}
         setVideoUrl={setVideoUrl}

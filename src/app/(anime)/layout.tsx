@@ -4,7 +4,7 @@ import React, { ReactNode } from "react";
 
 const AnimeLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div>
+    <div className="flex gap-2 flex-col">
       <Header />
       <div className="container">{children}</div>
     </div>
