@@ -4,10 +4,10 @@ import React, { ReactNode } from "react";
 
 const AnimeLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <PageContainer>
+    <div>
       <Header />
-      {children}
-    </PageContainer>
+      <div className="container">{children}</div>
+    </div>
   );
 };
 

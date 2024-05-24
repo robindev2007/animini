@@ -17,6 +17,7 @@ const MainPage = () => {
       href: "/trending",
     },
   ];
+
   return (
     <div className="flex justify-center w-full h-screen">
       <div className="flex gap-3 items-center flex-col">

@@ -43,6 +43,7 @@ const HeaderSearch = () => {
     <div>
       <Button
         variant={"secondary"}
+        className="bg-card hover:bg-secondary/20 border"
         onClick={() => setShowSearch((prev) => !prev)}>
         <FaMagnifyingGlass />
       </Button>

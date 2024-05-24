@@ -43,7 +43,7 @@ const AnimeCard = ({
           width={400}
           height={600}
           alt={anime.title}
-          className="border border-border/80 pxshrink-0 overflow-hidden rounded-[inherit] aspect-[4/6]"
+          className="border shrink-0 w-full border-border/80 pxshrink-0 overflow-hidden rounded-[inherit] aspect-[4/6]"
         />
         <div className="">
           <h2 className="line-clamp-2 text-sm font-semibold">{anime.title}</h2>

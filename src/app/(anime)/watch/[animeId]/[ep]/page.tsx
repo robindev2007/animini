@@ -64,7 +64,12 @@ const AnimeWatchPage = ({
   useEffect(() => {
     const getData = async () => {
       const { data }: { data: { episodes: ep[] } } = await axios.get(
-        `https://prod-2-amvstrm-api.nyt92.eu.org/api/v1/episode/${animeId}`
+        `https://prod-2-amvstrm-api.nyt92.eu.org/api/v1/episode/${animeId}`,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
       );
       setEpisodes(data.episodes.reverse());
       console.log(data);
@@ -95,7 +100,12 @@ const AnimeWatchPage = ({
     // get streams
     try {
       const { data } = (await axios.get(
-        `https://prod-2-amvstrm-api.nyt92.eu.org/api/v2/stream/${animeEpId}`
+        `https://prod-2-amvstrm-api.nyt92.eu.org/api/v2/stream/${animeEpId}`,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
       )) as { data: stream };
 
       return data.stream.multi as server;

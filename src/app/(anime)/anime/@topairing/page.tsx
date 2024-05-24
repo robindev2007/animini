@@ -1,3 +1,4 @@
+"use client";
 import AnimeCard from "@/components/common/AnimeCard";
 import React from "react";
 
@@ -35,7 +36,8 @@ const TopAiring = async () => {
 
   return (
     <div>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      <h2>Top Airings</h2>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 lg:grid-cols-6">
         {animes &&
           animes.map((anime, i) => (
             <AnimeCard anime={anime} index={i} key={anime.id} />
