@@ -6,7 +6,7 @@ import Image from "next/image";
 const Header = () => {
   return (
     <div className="bg-secondary">
-      <div className="flex container gap-2 items-center justify-between py-1 px-3 relative z-20 border-b">
+      <div className="flex container gap-2 items-center justify-between py-2 px-3 relative z-20 border-b">
         <Link href={"/anime"} className="text-indigo-600 text-xl font-semibold">
           <Image
             className="h-6 w-fit"

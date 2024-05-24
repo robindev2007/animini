@@ -1,5 +1,6 @@
 "use client";
 import AnimeCard from "@/components/common/AnimeCard";
+import H2 from "@/components/ui/h2";
 import React from "react";
 
 export interface Anime {
@@ -36,8 +37,8 @@ const TopAiring = async () => {
 
   return (
     <div>
-      <h2>Top Airings</h2>
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 lg:grid-cols-6">
+      <H2>Top Airings</H2>
+      <div className="grid grid-cols-3 md:grid-cols-5 gap-1 lg:grid-cols-6">
         {animes &&
           animes.map((anime, i) => (
             <AnimeCard anime={anime} index={i} key={anime.id} />

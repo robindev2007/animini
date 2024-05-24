@@ -42,10 +42,15 @@ export type server = {
     quality: string;
   };
 };
+export type animeStore = {
+  id: string;
+  currentEp: number;
+  watchedEpisodes: number[];
+};
 
 export type serversWithTitle = {
-  sub?: server;
-  dub?: server;
+  Sub?: server;
+  Dub?: server;
 }[];
 
 const AnimeWatchPage = ({
@@ -58,6 +63,9 @@ const AnimeWatchPage = ({
   const [videoUrl, setVideoUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [servers, setServers] = useState<serversWithTitle>();
+  const [animeLocaldata, setAnimeLocaldata] = useState<animeStore>();
+
+  const localStore = typeof window !== "undefined" ? localStorage : undefined;
 
   const { shallowRouteState } = useShallowRoute();
   const pathname = usePathname();
@@ -83,11 +91,44 @@ const AnimeWatchPage = ({
     const subId = animeId + "-episode-" + newEpId;
     const dubId = animeId + "-dub-episode-" + newEpId;
 
+    const setLocastoreData = () => {
+      if (!localStore) return;
+
+      const oldData = JSON.parse(
+        localStore?.getItem(animeId) as string
+      ) as animeStore;
+
+      if (!oldData || !oldData.currentEp) {
+        const animeData: animeStore = {
+          id: animeId,
+          currentEp: Number(ep),
+          watchedEpisodes: [Number(ep)],
+        };
+        localStore.setItem(animeId, JSON.stringify(animeData));
+        setAnimeLocaldata(animeData);
+        return;
+      }
+
+      const newEpisodesSet = new Set([
+        ...oldData.watchedEpisodes,
+        Number(newEpId),
+      ]);
+      const newEpisodes = Array.from(newEpisodesSet).sort((a, b) => a - b);
+      const newData: animeStore = {
+        ...oldData,
+        currentEp: Number(newEpId),
+        watchedEpisodes: newEpisodes,
+      };
+
+      localStore.setItem(animeId, JSON.stringify(newData));
+      setAnimeLocaldata(newData);
+    };
+
     const getAllStrems = async () => {
       setLoading(true);
       const subStrems = await getStrem(subId);
       const dubStrems = await getStrem(dubId);
-      const newServers = [{ sub: subStrems }, { dub: dubStrems }];
+      const newServers = [{ Sub: subStrems }, { Dub: dubStrems }];
       setServers(newServers);
       console.log(newServers);
       const newUrl = dubStrems ? dubStrems.main.url : subStrems?.main.url || "";
@@ -95,6 +136,7 @@ const AnimeWatchPage = ({
       setLoading(false);
     };
     getAllStrems();
+    setLocastoreData();
   }, [shallowRouteState]);
 
   const getStrem = async (animeEpId: string) => {
@@ -118,16 +160,20 @@ const AnimeWatchPage = ({
   return (
     <div className="space-y-2">
       <VideoPlayer url={videoUrl} loading={loading} />
-      <WatchingDetails ep={pathname.split("/").splice(-1)[0]} />
-      <Servers
-        allServers={servers}
-        setVideoUrl={setVideoUrl}
-        activeUrl={videoUrl}
-      />
+      <div className="flex gap-2 flex-col lg:flex-row p-2">
+        <WatchingDetails ep={pathname.split("/").splice(-1)[0]} />
+
+        <Servers
+          allServers={servers}
+          setVideoUrl={setVideoUrl}
+          activeUrl={videoUrl}
+        />
+      </div>
       <Episodes
         episodes={episodes}
-        currentEp={Number(ep)}
+        currentEp={Number(currentEp?.id.split("-").splice(-1) || ep)}
         setNewEp={setCurrentEp}
+        animeStore={animeLocaldata}
       />
     </div>
   );

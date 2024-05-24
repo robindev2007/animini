@@ -16,7 +16,15 @@ const WatchPage = ({
       ? JSON.parse(storedData)
       : undefined;
 
-    if (!data || !data.currentEp) return redirect(`/watch/${animeId}/1`);
+    if (!data || !data.currentEp) {
+      const animeData: animeStore = {
+        id: animeId,
+        currentEp: 1,
+        watchedEpisodes: [1],
+      };
+      localstore.setItem(animeId, JSON.stringify(animeData));
+      return redirect(`/watch/${animeId}/1`);
+    }
 
     return redirect(`/watch/${animeId}/${data.currentEp}`);
   }

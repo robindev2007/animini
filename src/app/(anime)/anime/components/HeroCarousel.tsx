@@ -1,6 +1,6 @@
 "use client";
 import { topAnimes } from "@/lib/constance/anime-data";
-import React from "react";
+import React, { useRef } from "react";
 import HeroCarouselCard from "./HeroCarouselCard";
 
 import {
@@ -10,16 +10,22 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 const HeroCarousel = () => {
   const animes = topAnimes;
+  const plugin = useRef(Autoplay({ delay: 1000 * 5, stopOnInteraction: true }));
   return (
     <div>
-      <Carousel>
+      <Carousel
+        plugins={[plugin.current]}
+        opts={{
+          loop: true,
+        }}>
         <CarouselContent className="-ml-4">
           {animes.map((anime) => (
             <CarouselItem className="pl-4" key={anime.title.native}>
-              <HeroCarouselCard anime={animes[0]} />
+              <HeroCarouselCard anime={anime} />
             </CarouselItem>
           ))}
         </CarouselContent>

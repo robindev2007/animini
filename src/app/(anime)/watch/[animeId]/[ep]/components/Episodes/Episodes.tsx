@@ -10,8 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { animeStore } from "@/utils/setAnimeLocalstore";
-import { ep } from "../../page";
+import { animeStore, ep } from "../../page";
 
 const Episodes = ({
   episodes,
@@ -21,7 +20,7 @@ const Episodes = ({
 }: {
   episodes: ep[] | undefined;
   currentEp: number;
-  animeStore?: animeStore | undefined;
+  animeStore?: animeStore;
   setNewEp: React.Dispatch<React.SetStateAction<ep | undefined>>;
 }) => {
   const { shallowRoute, shallowRouteState } = useShallowRoute();
@@ -54,17 +53,21 @@ const Episodes = ({
           ))}
         </SelectContent>
       </Select>
-      <div className="grid md:grid-cols-10 grid-cols-5 gap-2">
+      <div className="grid md:grid-cols-10 grid-cols-5 gap-1">
         {episodes?.length &&
-          episodes.slice(Number(epStart), Number(epStart) + 100).map((ep) => (
-            <EpisodeButton
-              key={ep.id}
-              ep={ep}
-              activeEp={shallowRouteState}
-              pushNewEp={pushNewEp}
-              // watched={animeStore?.watchedEpisodes?.includes(ep.number)}
-            />
-          ))}
+          episodes
+            .slice(Number(epStart), Number(epStart) + 100)
+            .map((ep) => (
+              <EpisodeButton
+                key={ep.id}
+                ep={ep}
+                activeEp={currentEp.toString()}
+                pushNewEp={pushNewEp}
+                watched={animeStore?.watchedEpisodes?.includes(
+                  Number(ep.id.split("-").splice(-1))
+                )}
+              />
+            ))}
       </div>
     </div>
   );
