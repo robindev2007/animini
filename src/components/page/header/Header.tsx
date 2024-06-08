@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <div className="bg-card">
       <div className="flex container gap-2 items-center justify-between py-2 px-3 relative z-20">
-        <Link href={"/watch"} className="text-indigo-600 text-xl font-semibold">
+        <Link href={"/home"} className="text-indigo-600 text-xl font-semibold">
           <Image
             className="h-6 w-fit"
             src={"/images/logo-main.png"}
