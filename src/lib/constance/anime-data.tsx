@@ -302,14 +302,14 @@ export const topAnimes = [
       "Gold Roger was known as the Pirate King, the strongest and most infamous being to have sailed the Grand Line. The capture and death of Roger by the World Government brought a change throughout the world. His last words before his death revealed the location of the greatest treasure in the world, One Piece. It was this revelation that brought about the Grand Age of Pirates, men who dreamed of finding One Piece (which promises an unlimited amount of riches and fame), and quite possibly the most coveted of titles for the person who found it, the title of the Pirate King.<br><br>\nEnter Monkey D. Luffy, a 17-year-old boy that defies your standard definition of a pirate. Rather than the popular persona of a wicked, hardened, toothless pirate who ransacks villages for fun, Luffy’s reason for being a pirate is one of pure wonder; the thought of an exciting adventure and meeting new and intriguing people, along with finding One Piece, are his reasons of becoming a pirate. Following in the footsteps of his childhood hero, Luffy and his crew travel across the Grand Line, experiencing crazy adventures, unveiling dark mysteries and battling strong enemies, all in order to reach One Piece.<br><br>\n<b>*This includes following special episodes:</b><br>\n- Chopperman to the Rescue! Protect the TV Station by the Shore! (Episode 336)<br>\n- The Strongest Tag-Team! Luffy and Toriko's Hard Struggle! (Episode 492)<br>\n- Team Formation! Save Chopper (Episode 542)<br>\n- History's Strongest Collaboration vs. Glutton of the Sea (Episode 590)<br>\n- 20th Anniversary! Special Romance Dawn (Episode 907)",
     format: "TV",
     bannerImage:
-      "https://s4.anilist.co/file/anilistcdn/media/anime/banner/21-wf37VakJmZqs.jpg",
+      "https://s4.anilist.co/file/anilistcdn/media/watch/banner/21-wf37VakJmZqs.jpg",
     coverImage: {
       extraLarge:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21-YCDoj1EkAxFn.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/large/bx21-YCDoj1EkAxFn.jpg",
       large:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx21-YCDoj1EkAxFn.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/medium/bx21-YCDoj1EkAxFn.jpg",
       medium:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx21-YCDoj1EkAxFn.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/small/bx21-YCDoj1EkAxFn.jpg",
       color: "#e49335",
     },
     episodes: null,
@@ -410,14 +410,14 @@ export const topAnimes = [
       "The third season of <i>Kono Subarashii Sekai ni Shukufuku wo! </i><br><br>\nThe dysfunctional party is back, but they may be short a member soon ’cause Kazuma is over it. Disillusioned with adventure, he wants to become a monk, but Aqua, Megumin, and Darkness call bull. However, the career dispute gets put on hold when a princess requests to hear all about their tales. Will the taste of fame at the royal castle keep them together or will this mark their farewell tour?<br><br>\n\n(Source: Crunchyroll)",
     format: "TV",
     bannerImage:
-      "https://s4.anilist.co/file/anilistcdn/media/anime/banner/136804-vrv1d1NgrfPo.jpg",
+      "https://s4.anilist.co/file/anilistcdn/media/watch/banner/136804-vrv1d1NgrfPo.jpg",
     coverImage: {
       extraLarge:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx136804-7FVftG67FPBc.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/large/bx136804-7FVftG67FPBc.jpg",
       large:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx136804-7FVftG67FPBc.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/medium/bx136804-7FVftG67FPBc.jpg",
       medium:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx136804-7FVftG67FPBc.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/small/bx136804-7FVftG67FPBc.jpg",
       color: "#3586e4",
     },
     episodes: 11,
@@ -499,14 +499,14 @@ export const topAnimes = [
       "Adaptation of the Hashira Training Arc.<br>\n<br>\nThe Hashira, the Demon Slayer Corps' highest ranking swordsmen and members. The Hashira Training has begun in order to face the forthcoming battle against Muzan Kibutsuji. Each with their own thoughts and hopes held in their hearts, a new story for Tanjiro and the Hashira begins.<br><br>\n(Source: Aniplex USA)<br><br>\n<i>Notes:<br>\n• The first episode has a runtime of ~49 minutes, and received an early premiere in cinemas as part of a special screening alongside the final episode of Kimetsu no Yaiba: Katanakaji no Sato-hen. </i>",
     format: "TV",
     bannerImage:
-      "https://s4.anilist.co/file/anilistcdn/media/anime/banner/166240-YdxoEhrfwNk0.jpg",
+      "https://s4.anilist.co/file/anilistcdn/media/watch/banner/166240-YdxoEhrfwNk0.jpg",
     coverImage: {
       extraLarge:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx166240-PBV7zukIHW7V.png",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/large/bx166240-PBV7zukIHW7V.png",
       large:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx166240-PBV7zukIHW7V.png",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/medium/bx166240-PBV7zukIHW7V.png",
       medium:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx166240-PBV7zukIHW7V.png",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/small/bx166240-PBV7zukIHW7V.png",
       color: "#e4d6ae",
     },
     episodes: null,
@@ -600,14 +600,14 @@ export const topAnimes = [
       "With the highest kaiju-emergence rates in the world, Japan is no stranger to attack by deadly monsters. Enter the Japan Defense Force, a military organization tasked with the neutralization of kaiju. Kafka Hibino, a kaiju-corpse cleanup man, has always dreamed of joining the force. But when he gets another shot at achieving his childhood dream, he undergoes an unexpected transformation. How can he fight kaiju now that he’s become one himself?!<br>\n<br>\n(Source: VIZ Media)",
     format: "TV",
     bannerImage:
-      "https://s4.anilist.co/file/anilistcdn/media/anime/banner/153288-JNsWuMPMAuJL.jpg",
+      "https://s4.anilist.co/file/anilistcdn/media/watch/banner/153288-JNsWuMPMAuJL.jpg",
     coverImage: {
       extraLarge:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx153288-tD2OmKy5CJab.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/large/bx153288-tD2OmKy5CJab.jpg",
       large:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx153288-tD2OmKy5CJab.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/medium/bx153288-tD2OmKy5CJab.jpg",
       medium:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx153288-tD2OmKy5CJab.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/small/bx153288-tD2OmKy5CJab.jpg",
       color: "#f1e4c9",
     },
     episodes: 12,
@@ -680,14 +680,14 @@ export const topAnimes = [
       "At Eden Hall, each glass has a story. A quiet bar lies tucked away in the streets of Tokyo, and it seems only the most desperate souls burdened by their own troubles manage to find its doors. But after a glass of God poured by the brilliant bartender Ryuu, they leave renewed. Ryuu has a gift—he knows how to soothe the soul with the perfect drink. Who will he meet next?<br><br>\n\n(Source: Crunchyroll)",
     format: "TV",
     bannerImage:
-      "https://s4.anilist.co/file/anilistcdn/media/anime/banner/155890-LYzJpbGn1iS5.jpg",
+      "https://s4.anilist.co/file/anilistcdn/media/watch/banner/155890-LYzJpbGn1iS5.jpg",
     coverImage: {
       extraLarge:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx155890-1dhQgpT8wYkF.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/large/bx155890-1dhQgpT8wYkF.jpg",
       large:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx155890-1dhQgpT8wYkF.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/medium/bx155890-1dhQgpT8wYkF.jpg",
       medium:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx155890-1dhQgpT8wYkF.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/small/bx155890-1dhQgpT8wYkF.jpg",
       color: "#e4861a",
     },
     episodes: null,
@@ -796,14 +796,14 @@ export const topAnimes = [
     description: "The fifth season of <i>Date A Live</i>.",
     format: "TV",
     bannerImage:
-      "https://s4.anilist.co/file/anilistcdn/media/anime/banner/151380-EWQOtJmxe3JY.jpg",
+      "https://s4.anilist.co/file/anilistcdn/media/watch/banner/151380-EWQOtJmxe3JY.jpg",
     coverImage: {
       extraLarge:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx151380-gvN5PjrybTw2.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/large/bx151380-gvN5PjrybTw2.jpg",
       large:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx151380-gvN5PjrybTw2.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/medium/bx151380-gvN5PjrybTw2.jpg",
       medium:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx151380-gvN5PjrybTw2.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/small/bx151380-gvN5PjrybTw2.jpg",
       color: "#e48650",
     },
     episodes: 12,
@@ -900,14 +900,14 @@ export const topAnimes = [
       "The second season of <i>Tsuki ga Michibiku Isekai Douchuu</i>.<br>\n<br>\nAfter Makoto Misumi defeats Mitsurugi and Sofia Bulga, humanity is saved from the attacking demon army—for the time being. The goddess is aware of Makoto’s growing power, and she sees him as less of a nuisance and more of a rival. Makoto continues his journey to further expand his community of outcasts and connect with more hyumans. But will he be strong enough to hold off the coming storm?<br>\n<br>\n(Source: Crunchyroll)",
     format: "TV",
     bannerImage:
-      "https://s4.anilist.co/file/anilistcdn/media/anime/banner/139518-OxLRGjPm9Tms.jpg",
+      "https://s4.anilist.co/file/anilistcdn/media/watch/banner/139518-OxLRGjPm9Tms.jpg",
     coverImage: {
       extraLarge:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx139518-GZWYKM8Kg1S2.png",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/large/bx139518-GZWYKM8Kg1S2.png",
       large:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx139518-GZWYKM8Kg1S2.png",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/medium/bx139518-GZWYKM8Kg1S2.png",
       medium:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx139518-GZWYKM8Kg1S2.png",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/small/bx139518-GZWYKM8Kg1S2.png",
       color: "#f17843",
     },
     episodes: 25,
@@ -1032,14 +1032,14 @@ export const topAnimes = [
       "When young adventurer Laios and his company are attacked and soundly thrashed by a dragon deep in a dungeon, the party loses all its money and provisions...and a member! They're eager to go back and save her, but there is just one problem: If they set out with no food or coin to speak of, they're sure to starve on the way! But Laios comes up with a brilliant idea: \"Let's eat the monsters!\" Slimes, basilisks, and even dragons...none are safe from the appetites of these dungeon-crawling gourmands! <br>\n<br>\n(Source: Yen Press)\n<br><br>\n<i>Note: A world premiere screening of Episode 1 was shown in the Studio TRIGGER panel at Anime Expo on July 1, 2023.</i>",
     format: "TV",
     bannerImage:
-      "https://s4.anilist.co/file/anilistcdn/media/anime/banner/153518-7uRvV7SLqmHV.jpg",
+      "https://s4.anilist.co/file/anilistcdn/media/watch/banner/153518-7uRvV7SLqmHV.jpg",
     coverImage: {
       extraLarge:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx153518-LEK6pAXtI03D.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/large/bx153518-LEK6pAXtI03D.jpg",
       large:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx153518-LEK6pAXtI03D.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/medium/bx153518-LEK6pAXtI03D.jpg",
       medium:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx153518-LEK6pAXtI03D.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/small/bx153518-LEK6pAXtI03D.jpg",
       color: "#f18650",
     },
     episodes: 24,
@@ -1157,14 +1157,14 @@ export const topAnimes = [
       "The adventure is over but life goes on for an elf mage just beginning to learn what living is all about. Elf mage Frieren and her courageous fellow adventurers have defeated the Demon King and brought peace to the land. But Frieren will long outlive the rest of her former party. How will she come to understand what life means to the people around her? Decades after their victory, the funeral of one her friends confronts Frieren with her own near immortality. Frieren sets out to fulfill the last wishes of her comrades and finds herself beginning a new adventure…\n<br><br>\n(Source: Crunchyroll)",
     format: "TV",
     bannerImage:
-      "https://s4.anilist.co/file/anilistcdn/media/anime/banner/154587-ivXNJ23SM1xB.jpg",
+      "https://s4.anilist.co/file/anilistcdn/media/watch/banner/154587-ivXNJ23SM1xB.jpg",
     coverImage: {
       extraLarge:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx154587-gHSraOSa0nBG.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/large/bx154587-gHSraOSa0nBG.jpg",
       large:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx154587-gHSraOSa0nBG.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/medium/bx154587-gHSraOSa0nBG.jpg",
       medium:
-        "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx154587-gHSraOSa0nBG.jpg",
+        "https://s4.anilist.co/file/anilistcdn/media/watch/cover/small/bx154587-gHSraOSa0nBG.jpg",
       color: "#aee493",
     },
     episodes: 28,

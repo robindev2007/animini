@@ -6,15 +6,8 @@ import { motion } from "framer-motion";
 import { Badge } from "../ui/badge";
 import { animeInfoT } from "@/types/anime/anime.types";
 import { getAnimeSubName } from "@/utils/utils";
-import { animeRes } from "@/app/(anime)/anime/@topairing/page";
 
-const AnimeCard = ({
-  anime,
-  index,
-}: {
-  anime: animeRes["results"][0];
-  index: number;
-}) => {
+const AnimeCard = ({ anime }: { anime: any }) => {
   const itemVariants = {
     initial: {
       opacity: 0,
@@ -23,7 +16,7 @@ const AnimeCard = ({
       opacity: 1,
       transition: {
         duration: 0.6,
-        delay: index * 0.09,
+        delay: 0.09,
         ease: [0.22, 1, 0.36, 1],
       },
     },
@@ -43,7 +36,7 @@ const AnimeCard = ({
           width={400}
           height={600}
           alt={anime.title}
-          className="border shrink-0 w-full border-border/80 pxshrink-0 overflow-hidden rounded-[inherit] aspect-[4/6]"
+          className="border shrink-0 w-full border-border/80 overflow-hidden rounded-[inherit] aspect-[4/5] object-cover"
         />
         <div className="">
           <h2 className="line-clamp-2 text-sm font-semibold">{anime.title}</h2>

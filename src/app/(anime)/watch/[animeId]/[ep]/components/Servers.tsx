@@ -1,8 +1,8 @@
 import React from "react";
-import { serversWithTitle } from "../page";
 import { Button } from "@/components/ui/button";
 import { MdSubtitles } from "react-icons/md";
 import { FaMicrophone } from "react-icons/fa";
+import { serversWithTitle } from "./WatchPage";
 
 const Servers = ({
   allServers,

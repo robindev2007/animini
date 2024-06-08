@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { ep } from "../../page";
+import { ep } from "../WatchPage";
 import { Button } from "@/components/ui/button";
 import useshalowRoute from "@/components/hook/useShalowRoute";
 import { cn } from "@/lib/utils";

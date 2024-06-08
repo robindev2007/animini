@@ -7,7 +7,7 @@ const VideoPlayer = ({ url, loading }: { url: string; loading: boolean }) => {
   const nextEpisode = () => {};
   const prevEpisode = () => {};
   return (
-    <div className="rounded-md overflow-hidden">
+    <div className="rounded-md overflow-hidden container p-0">
       {!url || loading ? (
         <Skeleton className="aspect-video w-full" />
       ) : (

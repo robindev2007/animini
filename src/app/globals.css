@@ -5,55 +5,81 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --foreground: 222.2 84% 4.9%;
+
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 222.2 84% 4.9%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --sidebar-width: 20rem;
+
     --radius: 0.5rem;
   }
 
   .dark {
     color-scheme: dark;
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 11%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 265 54% 39%;
+    --background: 0 0% 0%;
+    --foreground: 210 40% 98%;
 
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 22%;
-    --input: 240 3.7% 15.9%;
-    --ring: 188 40% 30%;
+    --card: 0 0% 15%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 265 54% 39%;
+    --primary-foreground: 222.2 47.4% 100%;
+
+    --secondary: 210 2% 23%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 210 2% 23%;
+    --muted-foreground: 210 1% 65%;
+
+    --accent: 210 2% 23%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 66% 38%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 1% 18%;
+    --input: 0 1% 20%;
+    --ring: 0 0% 41%;
+
+    --card-gap: 0.5rem;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+    /* 
+     */
+  }
+
+  * {
+    scrollbar-color: hsl(var(--secondary)) hsl(var(--card));
   }
 
   body {
@@ -87,8 +113,12 @@ iframe,
 .anime-card-image {
   mask-image: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0.2) 0%,
-    rgba(0, 0, 0, 0.6) 60%,
-    rgba(0, 0, 0, 0.98) 100%
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 1) 100%
   );
+}
+
+.swiper-pagination {
+  @apply !bottom-3 !left-3 flex gap-2;
 }

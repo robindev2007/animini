@@ -16,7 +16,7 @@ const HeroCarousel = () => {
   const animes = topAnimes;
   const plugin = useRef(Autoplay({ delay: 1000 * 5, stopOnInteraction: true }));
   return (
-    <div>
+    <div className="container p-0">
       <Carousel
         plugins={[plugin.current]}
         opts={{

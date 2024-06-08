@@ -37,7 +37,7 @@ export const getAnimeData = cache(async (id: string) => {
   const infoUrl = `https://prod-2-amvstrm-api.nyt92.eu.org/api/v2/info/${id}`;
 
   try {
-    const { data }: { data: animeInfoT } = await axios.get(infoUrl);
+    const { data }: { data: any } = await axios.get(infoUrl);
 
     const getEpisodes = async (url: string) => {
       const { data } = await axios.get(url);

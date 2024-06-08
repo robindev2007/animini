@@ -6,7 +6,7 @@ const AnimeLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex gap-2 flex-col">
       <Header />
-      <div className="container">{children}</div>
+      <div>{children}</div>
     </div>
   );
 };

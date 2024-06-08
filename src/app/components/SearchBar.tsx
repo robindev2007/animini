@@ -31,7 +31,7 @@ const SearchBar = () => {
   }, [search]);
 
   return (
-    <div className="w-full bg-card md:max-w-[80vw]">
+    <div className="w-full bg-card md:max-w-[50vw]">
       <div className="flex gap-2 p-2">
         <Input
           value={searchText}
@@ -39,6 +39,7 @@ const SearchBar = () => {
           onChange={(e) => setSearchText(e.target.value)}
         />
         <Button
+          className="h-full"
           variant={"secondary"}
           onClick={() => setShowSearch((prev) => !prev)}>
           <FaMagnifyingGlass />
