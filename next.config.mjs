@@ -33,4 +33,4 @@ const withPWA =
       })
     : (config) => config;
 
-export default withPlaiceholder(withPWA(nextConfig));
+export default nextConfig;
