@@ -65,7 +65,7 @@
 
     --border: 0 1% 18%;
     --input: 0 1% 20%;
-    --ring: 0 0% 41%;
+    --ring: 0 1% 30%;
 
     --card-gap: 0.5rem;
   }
@@ -113,12 +113,24 @@ iframe,
 .anime-card-image {
   mask-image: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.091) 0%,
+    rgba(0, 0, 0, 1) 50%,
     rgba(0, 0, 0, 1) 100%
   );
 }
 
 .swiper-pagination {
   @apply !bottom-3 !left-3 flex gap-2;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.clip-right {
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+}
+
+.clip-left {
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
 }

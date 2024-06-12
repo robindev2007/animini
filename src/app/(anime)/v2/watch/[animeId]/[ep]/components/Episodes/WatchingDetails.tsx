@@ -1,6 +1,3 @@
-import { CardContent } from "@/components/ui/card";
-import React from "react";
-
 const WatchingDetails = ({ ep }: { ep: number | string | undefined }) => {
   return (
     <div className="bg-card text-center p-2 lg:max-w-[20%] rounded-md text-muted-foreground text-sm border border-border/10 lg:p-5">

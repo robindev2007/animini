@@ -7,19 +7,12 @@ import HeaderSearchResultCard from "./HeaderSearchResultCard";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-
-export type searchRes = {
-  id: string;
-  title: string;
-  image: string;
-  releaseDate: string; // or null
-  subOrDub: "sub" | "dub"; // or "dub"
-  url: string;
-}[];
+import { AnimeSearchRes } from "@/types/anime/anime.types";
+import axios from "axios";
 
 const HeaderSearch = () => {
   const [searchText, setSearchText] = useState("");
-  const [searchRes, setSearchRes] = useState<searchRes | null>();
+  const [searchRes, setSearchRes] = useState<AnimeSearchRes | undefined>();
   const [search] = useDebounce(searchText, 400);
   const [showSearch, setShowSearch] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,13 +20,13 @@ const HeaderSearch = () => {
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
-      setSearchRes(null);
+      setSearchRes(undefined);
       if (!searchText.length) return setLoading(false);
-      const res = await fetch(`https://animetize-api.vercel.app/${searchText}`);
+      const { data } = await axios.get<AnimeSearchRes>(
+        `https://amv-api.vercel.app/api/v2/search?q=${searchText}&limit=30`
+      );
 
-      const data = await res.json();
-
-      setSearchRes(data.results);
+      setSearchRes(data);
       setLoading(false);
     };
     getData();
@@ -43,43 +36,44 @@ const HeaderSearch = () => {
     <div>
       <Button
         variant={"secondary"}
-        className="bg-card hover:bg-secondary/20 border"
+        className="bg-background h-full hover:bg-secondary border border-border/80"
         onClick={() => setShowSearch((prev) => !prev)}>
         <FaMagnifyingGlass />
       </Button>
 
       {showSearch && (
         <div className="absolute top-full left-0 w-full bg-card border-t">
-          <div className="flex gap-2 p-2">
+          <div className="flex gap-2 p-2 items-center justify-center">
             <Input
               value={searchText}
               placeholder="Aa..."
               onChange={(e) => setSearchText(e.target.value)}
             />
-            <Button
-              variant={"secondary"}
+            {/* <Button
+              // variant={"secondary"}
+              className="flex-1"
               onClick={() => setShowSearch((prev) => !prev)}>
               <FaMagnifyingGlass />
-            </Button>
+            </Button> */}
           </div>
           {loading ? (
-            <div className="flex gap-2 flex-col p-2">
+            <div className="flex gap-2 flex-col p-2 w-full">
               {Array.from({ length: 10 }).map((_, i) => (
-                <div key={i}>
-                  <Skeleton className="h-30 w-full" />
-                </div>
+                <Skeleton key={i} className="h-30 w-max flex-1" />
               ))}
             </div>
           ) : (
-            <div className="p-2 max-h-[85vh] overflow-y-scroll">
-              {searchRes?.map((anime) => (
-                <HeaderSearchResultCard
-                  key={anime.id}
-                  anime={anime}
-                  setShowResults={setShowSearch}
-                />
-              ))}
-            </div>
+            searchRes && (
+              <div className="p-2 max-h-[85vh] overflow-x-hidden overflow-y-scroll">
+                {searchRes?.results?.map((anime) => (
+                  <HeaderSearchResultCard
+                    key={anime.id}
+                    anime={anime}
+                    setShowResults={setShowSearch}
+                  />
+                ))}
+              </div>
+            )
           )}
         </div>
       )}

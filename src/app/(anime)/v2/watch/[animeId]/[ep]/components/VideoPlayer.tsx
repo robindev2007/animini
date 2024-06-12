@@ -7,7 +7,7 @@ const VideoPlayer = ({ url, loading }: { url: string; loading: boolean }) => {
   const nextEpisode = () => {};
   const prevEpisode = () => {};
   return (
-    <div className="rounded-md overflow-hidden container p-0">
+    <div className="rounded overflow-hidden">
       {!url || loading ? (
         <Skeleton className="aspect-video w-full" />
       ) : (
@@ -22,4 +22,3 @@ const VideoPlayer = ({ url, loading }: { url: string; loading: boolean }) => {
 };
 
 export default VideoPlayer;
-// https://www034.vipanicdn.net/streamhls/0b594d900f47daabc194844092384914/ep.19.1709230009.m3u8

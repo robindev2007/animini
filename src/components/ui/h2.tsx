@@ -10,9 +10,9 @@ type props = ComponentPropsWithoutRef<"h2"> & {
   children: ReactNode;
 };
 
-const H2 = ({ children, ...props }: props) => {
+const H2 = ({ children, className, ...props }: props) => {
   return (
-    <h2 className={cn("text-xl font-semibold", props.className)} {...props}>
+    <h2 className={cn("text-xl font-semibold", className)} {...props}>
       {children}
     </h2>
   );

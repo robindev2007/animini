@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import { ep } from "../WatchPage";
 import { Button } from "@/components/ui/button";
 import useshalowRoute from "@/components/hook/useShalowRoute";
 import { cn } from "@/lib/utils";
+import { Episode } from "@/types/anime/anime.types";
 
 const EpisodeButton = ({
   ep,
@@ -11,9 +11,9 @@ const EpisodeButton = ({
   pushNewEp,
   watched,
 }: {
-  ep: ep;
+  ep: Episode;
   activeEp: string;
-  pushNewEp: (ep: ep) => void;
+  pushNewEp: (ep: Episode) => void;
   watched?: boolean;
 }) => {
   const handleClick = () => {

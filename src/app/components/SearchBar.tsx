@@ -1,16 +1,16 @@
 "use client";
-import { searchRes } from "@/components/page/header/HeaderSearch";
 import HeaderSearchResultCard from "@/components/page/header/HeaderSearchResultCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AnimeSearchRes } from "@/types/anime/anime.types";
 import React, { useEffect, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { useDebounce } from "use-debounce";
 
 const SearchBar = () => {
   const [searchText, setSearchText] = useState("");
-  const [searchRes, setSearchRes] = useState<searchRes | null>();
+  const [searchRes, setSearchRes] = useState<AnimeSearchRes | null>();
   const [search] = useDebounce(searchText, 400);
   const [showSearch, setShowSearch] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -54,18 +54,15 @@ const SearchBar = () => {
           ))}
         </div>
       ) : (
-        searchRes?.length &&
-        searchText.length > 0 && (
-          <div className="p-2 max-h-[60vh] overflow-y-scroll">
-            {searchRes?.map((anime) => (
-              <HeaderSearchResultCard
-                key={anime.id}
-                anime={anime}
-                setShowResults={setShowSearch}
-              />
-            ))}
-          </div>
-        )
+        <div className="p-2 max-h-[85vh] overflow-x-hidden overflow-y-scroll">
+          {searchRes?.results?.map((anime) => (
+            <HeaderSearchResultCard
+              key={anime.id}
+              anime={anime}
+              setShowResults={setShowSearch}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

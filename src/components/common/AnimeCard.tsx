@@ -3,11 +3,10 @@ import Image from "next/image";
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Badge } from "../ui/badge";
-import { animeInfoT } from "@/types/anime/anime.types";
-import { getAnimeSubName } from "@/utils/utils";
+import { TTopAiringRes } from "@/types/anime/anime.types";
+import { FaMicrophone } from "react-icons/fa";
 
-const AnimeCard = ({ anime }: { anime: any }) => {
+const AnimeCard = ({ anime }: { anime: TTopAiringRes["results"][0] }) => {
   const itemVariants = {
     initial: {
       opacity: 0,
@@ -22,6 +21,8 @@ const AnimeCard = ({ anime }: { anime: any }) => {
     },
   };
 
+  if (anime.status == "NOT_YET_RELEASED") return null;
+
   return (
     <motion.div
       variants={itemVariants}
@@ -29,17 +30,27 @@ const AnimeCard = ({ anime }: { anime: any }) => {
       animate="animate"
       viewport={{ once: true }}>
       <Link
-        href={`/watch/${getAnimeSubName(anime.id)}`}
+        href={`/v2/watch/${anime.id}`}
         className="transition-all duration-200 ease-out rounded h-full hover:shadow-2xl p-2 flex flex-col shadow hover:border-primary/60 gap-2">
         <Image
-          src={anime.image}
+          src={
+            anime.coverImage.extraLarge ??
+            anime.coverImage.large ??
+            anime.coverImage.medium
+          }
           width={400}
           height={600}
-          alt={anime.title}
-          className="border shrink-0 w-full border-border/80 overflow-hidden rounded-[inherit] aspect-[4/5] object-cover"
+          alt={anime.title.english ?? anime.title.native}
+          className="border shrink-0 w-full border-border/80 overflow-hidden rounded-[inherit] aspect-[460/590] object-cover rounded-b-none"
         />
+
         <div className="">
-          <h2 className="line-clamp-2 text-sm font-semibold">{anime.title}</h2>
+          <h2 className="line-clamp-2 text-sm font-semibold">
+            {anime.title.english ??
+              anime.title.userPreferred ??
+              anime.title.romaji ??
+              anime.title.native}
+          </h2>
         </div>
       </Link>
     </motion.div>

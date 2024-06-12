@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TbPlayerTrackNextFilled,
   TbPlayerTrackPrevFilled,
@@ -17,7 +17,6 @@ import "@vidstack/react/player/styles/default/theme.css";
 import "@vidstack/react/player/styles/default/layouts/video.css";
 
 import { SeekForward10Icon } from "@vidstack/react/icons";
-import { getCookie, getCookies, setCookie } from "cookies-next";
 import { useFirstRender } from "../custom-hooks/useFirstRender";
 
 const Player = ({

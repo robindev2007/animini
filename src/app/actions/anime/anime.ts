@@ -1,12 +1,6 @@
 "use server";
 
-import {
-  animeInfoT,
-  episodeT,
-  searchResultT,
-  singleStremT,
-  trendingAnimeT,
-} from "@/types/anime/anime.types";
+import { TAnimeInfo, TTopAiringRes } from "@/types/anime/anime.types";
 import axios from "axios";
 import { unstable_noStore } from "next/cache";
 import { cache } from "react";
@@ -23,11 +17,11 @@ export const getTopAiringAnimes = cache(async (limit?: number) => {
       },
     });
 
-    const res = data.results.filter((anime: animeInfoT) => {
+    const res = data.results.filter((anime: TAnimeInfo) => {
       return anime;
     });
 
-    return data.results as trendingAnimeT[];
+    return data.results as TTopAiringRes[];
   } catch (error) {
     return null;
   }
@@ -41,7 +35,7 @@ export const getAnimeData = cache(async (id: string) => {
 
     const getEpisodes = async (url: string) => {
       const { data } = await axios.get(url);
-      return data.episodes as episodeT[];
+      return data.episodes as any[];
     };
 
     const info = data;
@@ -88,7 +82,7 @@ export const getStrems = cache(
           strems: value,
         }));
 
-        return res as unknown as singleStremT;
+        return res as unknown as any;
       } catch (error) {
         return null;
       }
@@ -119,9 +113,9 @@ export const getTrandingAnimes = async (limit?: number) => {
       },
     });
 
-    const res = data.results.filter((anime: animeInfoT) => anime.bannerImage);
+    const res = data.results.filter((anime: any) => anime.bannerImage);
 
-    return data.results as animeInfoT[];
+    return data.results as any[];
   } catch (error) {
     return null;
   }
@@ -139,7 +133,7 @@ export const getSearchResult = async (search: string) => {
       },
     });
 
-    return data.results as searchResultT[];
+    return data.results as any[];
   } catch (error) {
     return null;
   }

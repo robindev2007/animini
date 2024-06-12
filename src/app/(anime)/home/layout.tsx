@@ -1,6 +1,4 @@
-import Header from "@/components/page/header/Header";
 import React, { ReactNode } from "react";
-import HeroCarousel from "./components/HeroCarousel";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
