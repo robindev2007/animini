@@ -1,11 +1,14 @@
-// @ts-nocheck
-import withPlaiceholder from "@plaiceholder/next";
-
-import withPWAInit from "next-pwa";
 /** @type {import('next').NextConfig} */
 /**
  * @type {import('next').NextConfig}
  */
+
+import withPWAInit from "@ducanh2912/next-pwa";
+
+const withPWA = withPWAInit({
+  dest: "public",
+});
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -26,11 +29,4 @@ const nextConfig = {
   },
 };
 
-const withPWA =
-  process.env.NODE_ENV === "production"
-    ? withPWAInit({
-        dest: "public",
-      })
-    : (config) => config;
-
-export default nextConfig;
+export default withPWA(nextConfig);
