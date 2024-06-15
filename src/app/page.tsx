@@ -1,15 +1,14 @@
 "use client";
-import HeaderSearch from "@/components/page/header/HeaderSearch";
-import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import SearchBar from "./components/SearchBar";
 import { Button } from "@/components/ui/button";
 import { FaArrowRight } from "react-icons/fa6";
 import poster from "../../public/images/posters/1.png";
 import logo from "../../public/images/logo-main.png";
-import SearchAnime from "@/components/common/SearchAnime";
+import dynamic from "next/dynamic";
+
+const SearchAnime = dynamic(() => import("@/components/common/SearchAnime"));
 
 const MainPage = () => {
   const links = [
@@ -38,16 +37,14 @@ const MainPage = () => {
             </Link>
           ))}
         </div>
-        {/* <Input placeholder="Anime..." className="md:w-[40%] w-full" /> */}
-        {/* <SearchBar /> */}
-        <SearchAnime className="md:max-w-[60vw] rounded-md" />
+        <SearchAnime className="md:max-w-xl rounded-md" />
         <Image
           className="h-96 object-contain"
           src={poster}
           alt="One piece poster"
-          width={1432 / 0.7}
-          height={159 / 0.7}
-          property={""}
+          width={1002.4}
+          height={111.3}
+          priority
         />
 
         <Button asChild className="flex gap-2 p-6 text-lg hover:gap-2">

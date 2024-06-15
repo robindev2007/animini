@@ -35,6 +35,7 @@ const HeaderSearch = () => {
   return (
     <div>
       <Button
+        aria-label="Search Button"
         variant={"secondary"}
         className="bg-background h-full hover:bg-secondary border border-border/80"
         onClick={() => setShowSearch((prev) => !prev)}>
@@ -49,12 +50,6 @@ const HeaderSearch = () => {
               placeholder="Aa..."
               onChange={(e) => setSearchText(e.target.value)}
             />
-            {/* <Button
-              // variant={"secondary"}
-              className="flex-1"
-              onClick={() => setShowSearch((prev) => !prev)}>
-              <FaMagnifyingGlass />
-            </Button> */}
           </div>
           {loading ? (
             <div className="flex gap-2 flex-col p-2 w-full">
@@ -66,11 +61,7 @@ const HeaderSearch = () => {
             searchRes && (
               <div className="p-2 max-h-[85vh] overflow-x-hidden overflow-y-scroll">
                 {searchRes?.results?.map((anime) => (
-                  <HeaderSearchResultCard
-                    key={anime.id}
-                    anime={anime}
-                    setShowResults={setShowSearch}
-                  />
+                  <HeaderSearchResultCard key={anime.id} anime={anime} />
                 ))}
               </div>
             )

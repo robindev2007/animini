@@ -56,11 +56,7 @@ const SearchBar = () => {
       ) : (
         <div className="p-2 max-h-[85vh] overflow-x-hidden overflow-y-scroll">
           {searchRes?.results?.map((anime) => (
-            <HeaderSearchResultCard
-              key={anime.id}
-              anime={anime}
-              setShowResults={setShowSearch}
-            />
+            <HeaderSearchResultCard key={anime.id} anime={anime} />
           ))}
         </div>
       )}

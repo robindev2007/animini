@@ -42,14 +42,15 @@
     --background: 0 0% 0%;
     --foreground: 210 40% 98%;
 
-    --card: 0 0% 15%;
+    --card: 0 0% 12%;
     --card-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 265 54% 39%;
-    --primary-foreground: 222.2 47.4% 100%;
+    --primary: 266 54% 39%;
+    --primary-foreground: 266 52% 60%;
+    --primary-lite: 266 28% 16%;
 
     --secondary: 210 2% 23%;
     --secondary-foreground: 210 40% 98%;
@@ -74,12 +75,11 @@
 @layer base {
   * {
     @apply border-border;
-    /* 
-     */
   }
 
   * {
     scrollbar-color: hsl(var(--secondary)) hsl(var(--card));
+    scrollbar-width: 5px;
   }
 
   body {
@@ -90,17 +90,25 @@
   }
 }
 
-.react-player__preview {
-  @apply h-full;
-}
-
-.anime-slider-image {
+.anime-slider-image-mask {
   mask-image: linear-gradient(
     90deg,
     rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.3) 60%,
-    rgba(0, 0, 0, 0.4) 100%
+    rgba(0, 0, 0, 0.5) 50%,
+    rgba(0, 0, 0, 0.8) 70%,
+    rgba(0, 0, 0, 1) 100%
   );
+  opacity: 0.9;
+}
+
+@screen xl {
+  .anime-slider-image-mask {
+    mask-image: none;
+  }
+}
+
+.react-player__preview {
+  @apply h-full;
 }
 
 iframe,
@@ -108,15 +116,6 @@ iframe,
 .play-video {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
-}
-
-.anime-card-image {
-  mask-image: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.091) 0%,
-    rgba(0, 0, 0, 1) 50%,
-    rgba(0, 0, 0, 1) 100%
-  );
 }
 
 .swiper-pagination {
@@ -128,9 +127,22 @@ iframe,
 }
 
 .clip-right {
+  padding-right: 7px;
+  margin-right: -2px;
   clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
 }
 
 .clip-left {
-  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+  padding-left: 7px;
+  margin-left: -2px;
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.clip-both {
+  padding-left: 7px;
+  padding-right: 7px;
+  margin-right: -2px;
+  margin-left: -2px;
+
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
 }

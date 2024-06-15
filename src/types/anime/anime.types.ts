@@ -33,6 +33,26 @@ export type TopAirResult = {
   averageScore: number;
   nextAiringEpisode?: NextAiringEpisode;
 };
+export type AnimeCard = {
+  id: number;
+  idMal: number;
+  status: string;
+  title: Title;
+  genres: string[];
+  tags: Tag[];
+  trailer?: Trailer;
+  description: string;
+  format: string;
+  bannerImage?: string;
+  coverImage: CoverImage;
+  episodes?: number;
+  meanScore: number;
+  duration?: number;
+  season: string;
+  seasonYear: number;
+  averageScore: number;
+  nextAiringEpisode?: NextAiringEpisode;
+};
 
 export type Tag = {
   id: number;
@@ -327,4 +347,45 @@ export interface TrendingNextAiringEpisode {
   airingAt: number;
   timeUntilAiring: number;
   episode: number;
+}
+
+export interface TopActionAnimesRes {
+  code: number;
+  message: string;
+  pageInfo: TopActionAnimesPageInfo;
+  results: TopAirResult[];
+}
+
+export interface TopActionAnimesPageInfo {
+  total: number;
+  perPage: number;
+  currentPage: number;
+  lastPage: number;
+  hasNextPage: boolean;
+}
+
+export interface TopActionAnimesResult {
+  id: number;
+  idMal: number;
+  status: string;
+  title: Title;
+  bannerImage: string;
+  coverImage: CoverImage;
+  episodes?: number;
+  genres: string[];
+  tags: Tag[];
+  season: string;
+  format: string;
+  seasonYear: number;
+  averageScore: number;
+  duration?: number;
+  meanScore?: number;
+  nextAiringEpisode?: NextAiringEpisode;
+}
+
+export interface TopActionAnimesTitle {
+  userPreferred: string;
+  romaji: string;
+  english: string;
+  native: string;
 }

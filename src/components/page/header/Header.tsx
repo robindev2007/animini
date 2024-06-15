@@ -2,14 +2,15 @@ import React from "react";
 import HeaderSearch from "./HeaderSearch";
 import Link from "next/link";
 import Image from "next/image";
+import Container from "@/components/common/Container";
 
 const Header = () => {
   return (
-    <div className="bg-card">
-      <div className="flex container gap-2 items-center justify-between py-2 px-3 relative z-20">
+    <div className="bg-card border-b border-border/50 shadow-md">
+      <Container className="flex py-1 gap-2 items-center justify-between relative z-20">
         <Link href={"/home"} className="text-indigo-600 text-xl font-semibold">
           <Image
-            className="h-6 w-fit"
+            className="md:h-5 h-5 w-fit"
             src={"/images/logo-main.png"}
             height={173}
             width={828}
@@ -17,7 +18,7 @@ const Header = () => {
           />
         </Link>
         <HeaderSearch />
-      </div>
+      </Container>
     </div>
   );
 };

@@ -6,7 +6,6 @@ import { title } from "process";
 import React from "react";
 
 const RelatedAnimeCard = ({ anime }: { anime: TAnimeInfo["relation"][0] }) => {
-  if (anime.type === "MANGA") return;
   const animeTitle =
     anime.title.english ??
     anime.title.userPreferred ??

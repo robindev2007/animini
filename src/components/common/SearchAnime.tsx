@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { useDebounce } from "use-debounce";
 import { AnimeSearchRes } from "@/types/anime/anime.types";
-import { Skeleton } from "../ui/skeleton";
 import HeaderSearchResultCard from "../page/header/HeaderSearchResultCard";
 import axios from "axios";
 import { cn } from "@/lib/utils";
+import { useOutsideClick } from "../hook/useOutsideClick";
+import { AnimatePresence, motion } from "framer-motion";
+import AnimeResults from "./AnimeResults";
 
 const SearchAnime = ({ className }: { className?: string }) => {
   const [searchText, setSearchText] = useState("");
@@ -14,6 +16,11 @@ const SearchAnime = ({ className }: { className?: string }) => {
   const [search] = useDebounce(searchText, 400);
   const [showSearch, setShowSearch] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const containerRef = useOutsideClick(() => {
+    console.log("Click outside");
+    setShowSearch(false);
+  });
 
   useEffect(() => {
     const getData = async () => {
@@ -31,39 +38,25 @@ const SearchAnime = ({ className }: { className?: string }) => {
   }, [search]);
 
   return (
-    <div className={cn("w-full bg-card border-t", className)}>
-      <div className="flex gap-2 p-2 items-center justify-center">
+    <div
+      ref={containerRef}
+      className={cn("w-full relative rounded-md", className)}>
+      <div className={cn("p-2 transition-all", showSearch && "bg-card")}>
         <Input
+          onFocus={() => setShowSearch(true)}
           value={searchText}
           placeholder="Aa..."
-          onChange={(e) => setSearchText(e.target.value)}
+          className="bg-white text-black font-medium"
+          onChange={(e) => {
+            setShowSearch(true);
+            setSearchText(e.target.value);
+          }}
         />
-        {/* <Button
-      // variant={"secondary"}
-      className="flex-1"
-      onClick={() => setShowSearch((prev) => !prev)}>
-      <FaMagnifyingGlass />
-    </Button> */}
       </div>
-      {loading ? (
-        <div className="flex gap-2 flex-col p-2 w-full">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <Skeleton key={i} className="h-30 w-max flex-1" />
-          ))}
-        </div>
-      ) : (
-        searchRes && (
-          <div className="p-2 max-h-[60vh] overflow-x-hidden overflow-y-scroll">
-            {searchRes?.results?.map((anime) => (
-              <HeaderSearchResultCard
-                key={anime.id}
-                anime={anime}
-                setShowResults={setShowSearch}
-              />
-            ))}
-          </div>
-        )
-      )}
+
+      <AnimatePresence mode="wait">
+        {searchRes && showSearch && <AnimeResults animes={searchRes.results} />}
+      </AnimatePresence>
     </div>
   );
 };

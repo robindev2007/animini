@@ -1,7 +1,5 @@
 "use client";
-import { topAnimes } from "@/lib/constance/anime-data";
 import React from "react";
-import HeroCarouselCard from "./HeroCarouselCard";
 
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -13,22 +11,29 @@ import Container from "@/components/common/Container";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { TrendingRes } from "@/types/anime/anime.types";
+import CarouselCard from "./CarouselCard";
 
 const getTrandingAnimes = async () => {
   const { data } = await axios.get<TrendingRes>(
     "https://amv-api.vercel.app/api/v2/trending?limit=12"
   );
-  return data;
+  const results = data.results.filter((anime) => !!anime.bannerImage);
+  return results;
 };
 
-const Carousel = () => {
+const Carousel = ({
+  initialAnimes,
+}: {
+  initialAnimes: TrendingRes["results"];
+}) => {
   const { data: animes } = useQuery({
     queryKey: ["popularAnimes"],
     queryFn: getTrandingAnimes,
+    initialData: initialAnimes,
   });
 
   return (
-    <Container className="md:h-[40vh] h-[30vh]">
+    <Container className="md:h-[35vh] h-[30vh] lg:h-[40vh]">
       <Swiper
         speed={500}
         keyboard
@@ -42,9 +47,9 @@ const Carousel = () => {
         loop
         fadeEffect={{ crossFade: true }}
         className="h-full">
-        {animes?.results.map((anime) => (
+        {animes?.map((anime) => (
           <SwiperSlide key={anime.id}>
-            <HeroCarouselCard anime={anime} />
+            <CarouselCard anime={anime} />
           </SwiperSlide>
         ))}
       </Swiper>

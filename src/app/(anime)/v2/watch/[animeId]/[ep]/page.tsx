@@ -27,7 +27,7 @@ const AnimeWatchPage = async ({
   const { animeId, ep } = params;
 
   return (
-    <Container className="px-2 pb-7">
+    <Container className="pb-7">
       <AnimeWatch params={params} />
     </Container>
   );

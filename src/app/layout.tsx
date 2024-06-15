@@ -5,18 +5,8 @@ import Provider from "@/utils/providers/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// export const metadata: Metadata = {
-//   title: "Animez",
-//   description: "Watch animes sub or dub for free on Animez",
-//   manifest: "/manifest.webmanifest",
-//   metadataBase: new URL("https://zanime.vercel.app"),
-//   verification: {
-//     google: "F34cI-FmqcyPEdSVNhug_a4m_pbKSqI6rQzQGQ-ulEs",
-//   },
-// };
-
 const APP_NAME = "AnimeZ";
-const APP_DEFAULT_TITLE = "Watch anime online Zanime";
+const APP_DEFAULT_TITLE = "Watch anime online";
 const APP_TITLE_TEMPLATE = "%s - AnimeZ";
 const APP_DESCRIPTION = "Watch anime online free with no add on AnimeZ";
 
@@ -73,7 +63,7 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={inter.className}>
         <Provider>
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen overflow-x-hidden">{children}</main>
         </Provider>
       </body>
     </html>

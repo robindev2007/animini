@@ -7,3 +7,7 @@ export const getAnimeSubName = (name: string) => {
 
   return arr;
 };
+
+export const wati = async (time: number) => {
+  await new Promise((reslve) => setTimeout(() => reslve, time * 1000));
+};
