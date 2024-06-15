@@ -7,6 +7,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import poster from "../../public/images/posters/1.png";
 import logo from "../../public/images/logo-main.png";
 import dynamic from "next/dynamic";
+import Container from "@/components/common/Container";
 
 const SearchAnime = dynamic(() => import("@/components/common/SearchAnime"));
 
@@ -27,8 +28,8 @@ const MainPage = () => {
   ];
 
   return (
-    <div className="flex justify-center w-full h-screen pt-10">
-      <div className="flex gap-3 items-center flex-col container">
+    <div className="flex justify-center w-full py-10">
+      <Container className="flex gap-3 items-center flex-col">
         <Image className="w-40" src={logo} alt="zanime logo" />
         <div className="flex gap-3 text-sm">
           {links.map((link) => (
@@ -42,8 +43,7 @@ const MainPage = () => {
           className="h-96 object-contain"
           src={poster}
           alt="One piece poster"
-          width={1002.4}
-          height={111.3}
+          sizes="(min-width: 1540px) 1432px, calc(93.11vw + 17px)"
           priority
         />
 
@@ -53,7 +53,7 @@ const MainPage = () => {
             <FaArrowRight className="size-5" />
           </Link>
         </Button>
-      </div>
+      </Container>
     </div>
   );
 };

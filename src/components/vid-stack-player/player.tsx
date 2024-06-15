@@ -80,7 +80,7 @@ const Player = ({
               </SeekButton>
             ),
           }}
-          colorScheme="light"
+          colorScheme="dark"
           icons={defaultLayoutIcons}
         />
       </MediaPlayer>

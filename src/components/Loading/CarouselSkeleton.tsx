@@ -7,7 +7,7 @@ import { Skeleton } from "../ui/skeleton";
 const CarouselSkeleton = () => {
   return (
     <div>
-      <Container className="md:h-[35vh] h-[30vh] lg:h-[40vh]">
+      <Container className="h-60 md:h-80 overflow-hidden">
         {Array({ length: 10 }).map((_, i) => (
           <Skeleton key={i} className="h-full w-full" />
         ))}

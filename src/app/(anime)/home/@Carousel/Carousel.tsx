@@ -33,7 +33,7 @@ const Carousel = ({
   });
 
   return (
-    <Container className="md:h-[35vh] h-[30vh] lg:h-[40vh]">
+    <Container className="h-60 md:h-80 overflow-hidden">
       <Swiper
         speed={500}
         keyboard

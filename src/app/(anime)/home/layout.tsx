@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import { Metadata } from "next";
 import Container from "@/components/common/Container";
+import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -18,11 +19,12 @@ const AnimeLayout = ({
   topAction: ReactNode;
 }) => {
   return (
-    <Container className="flex flex-col space-y-5">
+    <Container className="flex flex-col space-y-5 pb-20">
       {Carousel}
       <div className="flex gap-4 flex-col w-full">
         {topairing}
-        {/* {topAction} */}
+        <Separator />
+        {topAction}
       </div>
       {/* {children} */}
     </Container>

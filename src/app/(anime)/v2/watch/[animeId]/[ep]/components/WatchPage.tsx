@@ -10,6 +10,7 @@ import { usePathname } from "next/navigation";
 import RelatedAnimes from "./RelatedAnimes";
 import NotFound from "@/components/common/not-founnd-page";
 import WatchingDetails from "./WatchingDetails";
+import Container from "@/components/common/Container";
 
 const AnimeWatch = ({
   params: { animeId, ep },
@@ -79,17 +80,24 @@ const AnimeWatch = ({
     !infoLoading &&
     !animeInfo?.id_provider?.idGogo &&
     !animeInfo?.id_provider?.idGogoDub
-  )
+  ) {
     return "this anime is not yeat loaded";
+  }
 
   return (
-    <div className="flex gap-2 flex-col xl:flex-row">
-      <div className="flex flex-col 2xl:flex-row-reverse gap-5 justify-between">
-        <div className="flex flex-col gap-2 h-full">
+    <div className="flex gap-2 flex-col xl:flex-row w-full">
+      <div className="flex flex-col 2xl:flex-row-reverse w-full gap-5 justify-between">
+        <div className="flex flex-col gap-2 h-full w-full">
           <VideoPlayer
             url={activeVideoUrl}
             loading={dubStremLoading ?? stremLoading}
+            poster={
+              animeInfo?.coverImage.extraLarge ??
+              animeInfo?.coverImage.large ??
+              animeInfo?.coverImage.medium
+            }
           />
+
           <div className="flex flex-1 gap-3 flex-col md:flex-row">
             <WatchingDetails
               currentEp={activeEp?.id.split("-").pop() ?? initialEp}

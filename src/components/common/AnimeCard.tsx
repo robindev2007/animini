@@ -26,13 +26,8 @@ const AnimeCard = ({
   };
 
   return (
-    <div
-    // variants={itemVariants}
-    // initial="initial"
-    // animate="animate"
-    // viewport={{ once: true }}
-    >
-      <div className="transition-all duration-200 ease-out rounded h-full hover:shadow-2xl p-2 flex flex-col shadow hover:border-primary/60 gap-2">
+    <div>
+      <div className="transition-all duration-200 ease-out rounded h-full hover:shadow-2xl flex flex-col shadow hover:border-primary/60 gap-2">
         <Link
           href={`/v2/watch/${anime.id}`}
           className="bg-card rounded-sm overflow-hidden border border-border/20 shadow-lg">
@@ -60,7 +55,7 @@ const AnimeCard = ({
                   },
                 }}
                 className="absolute top-0 left-0 h-full w-full bg-black/40 flex items-center justify-center transition-all ease-in-out ">
-                <FaPlay className="size-16" />
+                <FaPlay className="size-16 drop-shadow-xl" />
               </motion.div>
             </AnimatePresence>
           </div>

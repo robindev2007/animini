@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AnimeSearchRes } from "@/types/anime/anime.types";
 import axios from "axios";
+import SearchBar from "@/app/components/SearchBar";
+import { useOutsideClick } from "@/components/hook/useOutsideClick";
 
 const HeaderSearch = () => {
   const [searchText, setSearchText] = useState("");
@@ -32,8 +34,13 @@ const HeaderSearch = () => {
     getData();
   }, [search]);
 
+  const containerRef = useOutsideClick(() => {
+    console.log("Click outside");
+    setShowSearch(false);
+  });
+
   return (
-    <div>
+    <div ref={containerRef}>
       <Button
         aria-label="Search Button"
         variant={"secondary"}

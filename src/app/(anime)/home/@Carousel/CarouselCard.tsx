@@ -9,24 +9,24 @@ import { topAnime } from "@/lib/constance/anime-data";
 import { TrendingResult } from "@/types/anime/anime.types";
 
 const CarouselCard = ({ anime }: { anime: TrendingResult }) => {
-  const animeImage =
-    anime.coverImage.extraLarge ??
-    anime.coverImage.large ??
-    anime.coverImage.medium;
+  if (!anime.bannerImage) return null;
+
   const animeTitle =
     anime.title.english ??
     anime.title.userPreferred ??
     anime.title.romaji ??
     anime.title.native;
   return (
-    <div className="w-full relative h-full xl:flex gap-5 xl:items-center xl:justify-center">
-      <Image
-        src={anime.bannerImage ?? ""}
-        fill
-        alt=""
-        sizes="(min-width: 1620px) 1504px, 93.23vw"
-        className="order-last overflow-hidden bg-cover xl:w-[65%] h-full w-full object-cover xl:rounded-md anime-slider-image-mask"
-      />
+    <div className="w-full relative h-full xl:flex gap-5 xl:items-center xl:justify-center rounded-sm overflow-hidden">
+      <div className="order-last overflow-hidden bg-cover xl:w-[65%] h-full w-full object-cover xl:rounded-md anime-slider-image-mask relative">
+        <Image
+          src={anime.bannerImage ?? ""}
+          fill
+          alt={animeTitle}
+          sizes="(min-width: 1660px) 807px, (min-width: 1280px) calc(39.17vw + 165px), 97.5vw"
+          className="object-cover opacity-95"
+        />
+      </div>
       {/* <div className="xl:relative w-full flex"> */}
       <div className="w-[45%] absolute xl:relative h-fit left-3 bottom-10 shrink-0 xl:h-full xl:items-center xl:pl-4 md:flex">
         <div className="space-y-2">
