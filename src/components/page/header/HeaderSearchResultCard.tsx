@@ -19,7 +19,7 @@ const HeaderSearchResultCard = ({ anime }: { anime: SearchResult }) => {
 
   return (
     <Link
-      href={`/v2/watch/${anime.id}`}
+      href={`/watch/${anime.id}`}
       className="flex w-full gap-2 hover:bg-primary-lite py-2 even:bg-black odd:bg-card transition-all duration-200 px-2 ease-linear">
       <Image
         src={anime.coverImage.large ?? anime.coverImage.medium ?? ""}

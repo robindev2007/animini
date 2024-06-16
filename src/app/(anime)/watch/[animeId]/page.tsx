@@ -23,10 +23,10 @@ const WatchPage = ({
         watchedEpisodes: [1],
       };
       localstore.setItem(animeId, JSON.stringify(animeData));
-      return redirect(`/v2/watch/${animeId}/ep-1`);
+      return redirect(`/watch/${animeId}/ep-1`);
     }
 
-    return redirect(`/v2/watch/${animeId}/ep-${data.currentEp}`);
+    return redirect(`/watch/${animeId}/ep-${data.currentEp}`);
   }
 
   // Handle the case when localStorage is not available

@@ -29,7 +29,7 @@ const AnimeCard = ({
     <div>
       <div className="transition-all duration-200 ease-out rounded h-full hover:shadow-2xl flex flex-col shadow hover:border-primary/60 gap-2">
         <Link
-          href={`/v2/watch/${anime.id}`}
+          href={`/watch/${anime.id}`}
           className="bg-card rounded-sm overflow-hidden border border-border/20 shadow-lg">
           <div className="relative aspect-[460/660] w-full group">
             <Image
@@ -80,7 +80,7 @@ const AnimeCard = ({
           </div>
         </Link>
 
-        <Link href={`/v2/watch/${anime.id}`} className="">
+        <Link href={`/watch/${anime.id}`} className="">
           <h2 className="line-clamp-2 text-sm font-semibold hover:text-primary-foreground transition-colors ease-out">
             {anime.title.english ??
               anime.title.userPreferred ??

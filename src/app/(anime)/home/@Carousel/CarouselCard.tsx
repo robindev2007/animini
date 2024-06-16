@@ -40,9 +40,7 @@ const CarouselCard = ({ anime }: { anime: TrendingResult }) => {
           <Button
             asChild
             className="text-lg flex gap-2 w-fit p-6 py-1 h-fit mt-auto">
-            <Link
-              href={`/v2/watch/${anime.id}`}
-              className="xl:text-2xl text-lg">
+            <Link href={`/watch/${anime.id}`} className="xl:text-2xl text-lg">
               <FaPlay />
               Play now
             </Link>

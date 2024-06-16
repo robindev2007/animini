@@ -6,7 +6,7 @@ import axios from "axios";
 import React from "react";
 
 const TopAiring = async () => {
-  const animes = await getTopActionAnimes();
+  const animes = await getTopActionAnimes({});
   return <RenderAnimeFlex animes={animes} title="Top Action" />;
 };
 

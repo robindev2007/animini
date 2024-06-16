@@ -13,7 +13,7 @@ const RelatedAnimeCard = ({ anime }: { anime: TAnimeInfo["relation"][0] }) => {
     anime.title.native;
   return (
     <Link
-      href={`/v2/watch/${anime.id}`}
+      href={`/watch/${anime.id}`}
       className="flex gap-2 bg-card rounded-md p-1.5 items-start xl:max-w-64 shrink-0 hover:border-primary/90 border-2 border-border/50 shadow-md hover:z-10 transition-all ease-out">
       <Image
         src={anime.coverImage.large ?? anime.coverImage.medium ?? ""}

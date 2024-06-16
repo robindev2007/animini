@@ -17,7 +17,7 @@ const getTopAirings = async () => {
 
 const Page = async () => {
   const { animes } = await getTopAirings();
-  const topActionAnimes = await getTopActionAnimes();
+  const topActionAnimes = await getTopActionAnimes({ limit: 16 });
 
   return (
     <div>
